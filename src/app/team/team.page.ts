@@ -17,9 +17,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TeamPage implements OnInit {
 
-  public items = [1, 2, 3, 4, 5];
-  public api_data:string = 'https://pokeapi.co/api/v2/pokemon/';
-  public random_pokemon = Math.floor(Math.random() * 100) + 1;
+  public items:any = [];
+  public poke_api_url:string = 'https://pokeapi.co/api/v2/pokemon/';
+  public random_pokemon!:any 
+  public saved_pokemon!:any
 
   handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
@@ -38,9 +39,23 @@ export class TeamPage implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get(this.api_data + this.random_pokemon).subscribe((response) => {
+    this.http.get(this.poke_api_url + this.random_pokemon).subscribe((response) => {
       console.log(response);
     });
+  }
+
+  randomPokemon(){
+    this.random_pokemon = Math.floor(Math.random() * 100).toString();
+    this.http.get(this.poke_api_url + this.random_pokemon).subscribe((response) => {
+      console.log(response);
+      this.saved_pokemon = response;
+      
+      if(this.items.length < 6){
+        this.items.push(this.saved_pokemon);
+      }
+    });
+
+
   }
 
 }
