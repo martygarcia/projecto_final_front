@@ -11,7 +11,7 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.page').then( m => m.HomePage)
   },
   {
-    path: 'holi2',
-    loadComponent: () => import('./holi2/holi2.page').then( m => m.Holi2Page)
+    path: 'team',
+    loadComponent: () => import('./team/team.page').then( m => m.TeamPage)
   },
 ];

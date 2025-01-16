@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import {ModalComponent} from '../modal/modal.component';
 import { ModalController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,18 +16,22 @@ import { ModalController } from '@ionic/angular/standalone';
 })
 export class HomePage implements OnInit {
 
-  message = 'This modal example uses the modalController to present and dismiss modals.';
+  message = '';
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private router: Router) { }
 
-  async openModal() {
+  // componente modal
+
+  async openModal(level_number: number) {
 
     const modal = await this.modalCtrl.create({
       component: ModalComponent,
+      componentProps: {
+        number: level_number}
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+    const { role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
 
@@ -36,6 +41,16 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  levelButton(level_number: string) {
+
+    let level = {
+      number: level_number
+    };
+
+    // console.log('levelButton', level);
+    // this.router.navigate(['/modal.component', level]);
   }
 
 }
