@@ -55,7 +55,10 @@ export class TeamPage implements OnInit {
       }
     });
 
+  }
 
+  resetTeam(){
+    this.items = [];
   }
 
 }

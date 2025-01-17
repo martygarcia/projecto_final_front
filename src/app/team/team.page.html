@@ -1,8 +1,19 @@
 <ion-content [fullscreen]="true">
 
-  <ion-button color="medium" (click)="randomPokemon()">
-    Generate team
-  </ion-button>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-button color="medium" (click)="randomPokemon()">
+        Generate team
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="medium" (click)="resetTeam()">
+        Generate team
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
   <ion-list>
     <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
