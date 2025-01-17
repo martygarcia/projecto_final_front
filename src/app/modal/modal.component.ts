@@ -3,9 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
 import {NavParams} from '@ionic/angular';
-
 
 
 @Component({
@@ -23,12 +21,11 @@ export class ModalComponent  implements OnInit {
   constructor(private modalCtrl: ModalController,private router: Router, private navParams : NavParams) {}
 
   cancel() {
-    return this.modalCtrl.dismiss(null, 'cancel');
+    return this.modalCtrl.dismiss('cancel');
   }
 
   confirm() {
-    this.router.navigate(['/team']);
-    return this.modalCtrl.dismiss(null, 'cancel');
+    return this.modalCtrl.dismiss(this.number);
   }
 
   ngOnInit() {

@@ -1,0 +1,39 @@
+ion-grid {
+    width: 100%;
+    border: 1px solid #23e7afa2;
+    
+
+    ion-row:first-child {
+
+        
+        height: 70vh;
+
+        ion-col{
+            border: 1px solid #23e7afa2;
+        }
+
+    }
+
+    ion-row:last-child {
+
+        
+        height: 20vh;
+
+        ion-col{
+            border: 1px solid #23e7afa2;
+        }
+
+    }
+
+    ion-col {
+        font-size: 2rem;
+        text-align: center;
+        background-color: #121212;
+        border: 1px solid #9b3939;
+
+    }
+
+    ion-row {
+        background-color: #121212;
+    }
+}

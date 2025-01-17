@@ -31,6 +31,13 @@ export class HomePage implements OnInit {
     });
     modal.present();
 
+    modal.onDidDismiss().then((data:any) => {
+      if(data != 'cancel'){
+      this.router.navigate(['/pokemon-level', data]);
+      }
+      console.log(data);
+    });
+
     const { role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
@@ -43,14 +50,8 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  levelButton(level_number: string) {
-
-    let level = {
-      number: level_number
-    };
 
     // console.log('levelButton', level);
-    // this.router.navigate(['/modal.component', level]);
+    // this.router.navigate(['/pokemon-level', level]);
   }
 
-}

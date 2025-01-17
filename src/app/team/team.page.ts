@@ -39,15 +39,16 @@ export class TeamPage implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get(this.poke_api_url + this.random_pokemon).subscribe((response) => {
-      console.log(response);
-    });
+    // this.http.get(this.poke_api_url + this.random_pokemon).subscribe((response) => {
+    //   console.log(response);
+    // });
   }
 
   randomPokemon(){
-    this.random_pokemon = Math.floor(Math.random() * 100).toString();
+    this.random_pokemon = Math.floor(Math.random() * 150).toString();
     this.http.get(this.poke_api_url + this.random_pokemon).subscribe((response) => {
       console.log(response);
+      console.log(this.random_pokemon);
       this.saved_pokemon = response;
       
       if(this.items.length < 6){
@@ -61,4 +62,18 @@ export class TeamPage implements OnInit {
     this.items = [];
   }
 
+  saveTeam(){ 
+    if(this.items.length == 6){
+
+      // Post a la tabla de equipo hace falta saber q user esta logueado
+
+      this.http.get('http://localhost:3001/users').subscribe((response) => {
+        console.log(response);
+      });
+
+    } else {  
+      console.log('Select 6 Pokemon');
+  } 
+
+  } 
 }
