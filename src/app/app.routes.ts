@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: 'pokemon-level',
     loadComponent: () => import('./pokemon-level/pokemon-level.page').then( m => m.PokemonLevelPage)
   },
+  {
+    path: 'stats',
+    loadComponent: () => import('./stats/stats.page').then( m => m.StatsPage)
+  },
 ];

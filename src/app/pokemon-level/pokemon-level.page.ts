@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-pokemon-level',
   templateUrl: './pokemon-level.page.html',

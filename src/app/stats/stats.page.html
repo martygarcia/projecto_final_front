@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true">
+
+  <ion-content>
+    <ion-list>
+      @for (player of stats; track stats; let index = $index;) {
+        <ion-list>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-badge color={{stats_color[5]}}>{{ index + 1 }}</ion-badge>
+                </ion-col>
+                <ion-col>
+                  player name: {{ player.name }}
+                </ion-col>
+                <ion-col>
+                  medallas : {{ player.numero_medallas }}
+                </ion-col>
+                <ion-col>
+                  team  : {{ player.id }}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      }
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+  
+</ion-content>
