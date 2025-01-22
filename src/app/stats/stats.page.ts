@@ -19,13 +19,21 @@ export class StatsPage implements OnInit {
 
   items: string[] = [];
   public stats: any = [];
+  public team: any = [];
   public stats_color: any = ["primary", "secondary", "tertiary", "success", "warning", "danger", "medium"];
 
   ngOnInit() {
     this.http.get('http://localhost:3001/stats').subscribe((response) => {
-      console.log(response);
       this.stats = response;
+      console.log( "respuesta de api estadistnicas" + this.stats);
+      console.log(this.stats);
     });
+
+    this.http.get('http://localhost:3001/team').subscribe((response) => {
+      this.team = response;
+      console.log(response);
+    });
+
     this.generateItems();
   }
 

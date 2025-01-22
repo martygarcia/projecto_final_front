@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 // import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -10,13 +10,14 @@ import { HttpClient } from '@angular/common/http';
 
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   imports: [ RouterLink, RouterLinkActive ,IonicModule,HttpClientModule],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   public log_button:string = 'true';
   public data_login!:any;
@@ -28,7 +29,9 @@ export class AppComponent {
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private http: HttpClient) {
     addIcons( Icons );
+  }
 
+  ngOnInit() {
     this.http.get('http://localhost:3001/users').subscribe((response) => {
       console.log(response);
       this.data_login = response;

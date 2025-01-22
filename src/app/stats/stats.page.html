@@ -2,7 +2,7 @@
 
   <ion-content>
     <ion-list>
-      @for (player of stats; track stats; let index = $index;) {
+      @for (stat of stats; track stat; let index = $index;) {
         <ion-list>
           <ion-item>
             <ion-grid>
@@ -11,13 +11,13 @@
                   <ion-badge color={{stats_color[5]}}>{{ index + 1 }}</ion-badge>
                 </ion-col>
                 <ion-col>
-                  player name: {{ player.name }}
+                  player name: {{ stat.name }}
                 </ion-col>
                 <ion-col>
-                  medallas : {{ player.numero_medallas }}
+                  medallas : {{ stat.numero_medallas }}
                 </ion-col>
                 <ion-col>
-                  team  : {{ player.id }}
+                  team  : {{ stat.team }}
                 </ion-col>
               </ion-row>
             </ion-grid>
