@@ -71,6 +71,34 @@ export class TeamPage implements OnInit {
         console.log(response);
       });
 
+      let team_finish = {
+        pokemon_position1: this.items[0].name,
+        pokemon_position2: this.items[1].name,
+        pokemon_position3: this.items[2].name,
+        pokemon_position4: this.items[3].name,
+        pokemon_position5: this.items[4].name,
+        position_position6: this.items[5].name,
+        poke_img1: this.items[0].sprites.front_default,
+        poke_img2: this.items[1].sprites.front_default,
+        poke_img3: this.items[2].sprites.front_default,
+        poke_img4: this.items[3].sprites.front_default,
+        poke_img5: this.items[4].sprites.front_default,
+        poke_img6: this.items[5].sprites.front_default,
+      }
+      console.log(team_finish)
+    //Post 
+      this.http.post("http:localhost:3001/equipos").subscribe(
+        (response: any) => {
+          console.log('Respuesta del servidor:', response);
+        },
+        (error) => {
+          console.error('Error al realizar la solicitud POST:', error);
+        }
+    );
+
+  //   console.log(fechaFormateada)
+  // }
+
     } else {  
       console.log('Select 6 Pokemon');
   } 
