@@ -3,10 +3,10 @@ ion-grid {
     border: 1px solid #23e7afa2;
     
 
-    ion-row:first-child {
+    ion-row:nth-child(-n + 2) {
 
         
-        height: 70vh;
+        height: 35vh;
 
         ion-col{
             border: 1px solid #23e7afa2;
@@ -19,7 +19,13 @@ ion-grid {
         
         height: 20vh;
 
+        .game_text{
+            text-align: center;
+            font-size: 1.7rem;
+        }
+
         ion-col{
+            text-align: center;
             border: 1px solid #23e7afa2;
         }
 
