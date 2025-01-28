@@ -18,20 +18,15 @@ export class StatsPage implements OnInit {
   constructor(private http: HttpClient) { }
 
   items: string[] = [];
-  public stats: any = [];
+  public stats_imgs: any = [];
   public team: any = [];
   public stats_color: any = ["primary", "secondary", "tertiary", "success", "warning", "danger", "medium"];
 
   ngOnInit() {
-    this.http.get('http://localhost:3001/stats').subscribe((response) => {
-      this.stats = response;
-      console.log( "respuesta de api estadistnicas" + this.stats);
-      console.log(this.stats);
-    });
-
-    this.http.get('http://localhost:3001/team').subscribe((response) => {
-      this.team = response;
-      console.log(response);
+    this.http.get('http://localhost:3001/stats_and_team').subscribe((response) => {
+      this.stats_imgs = response;
+      console.log( "respuesta de api estadistnicas" + this.stats_imgs);
+      console.log(this.stats_imgs);
     });
 
     this.generateItems();

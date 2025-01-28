@@ -1,4 +1,9 @@
 ion-grid {
+
+    ion-progress-bar {
+        --progress-background: #09c567;
+    }
+
     width: 100%;
     border: 1px solid #23e7afa2;
     
@@ -42,4 +47,23 @@ ion-grid {
     ion-row {
         background-color: #121212;
     }
+
+    .poke1_container {
+        img {
+            width: 15rem;
+        }
+    }
+}
+
+.ps_container {
+    display: flex;
+
+    h3 {
+        margin: 1rem 1rem 0 0;
+    }
+
+    .ps_bar_container{
+        margin: 1.7rem 0 0 0;
+    }
+
 }

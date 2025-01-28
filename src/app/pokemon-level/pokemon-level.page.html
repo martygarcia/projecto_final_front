@@ -5,9 +5,15 @@
     <ion-grid>
       <ion-row>
         <ion-col offset="8">
-          <div class="poke1_container">
-            sdfdsf
+          @if (hola == true){
+          <div class="ps_container">
+            <h3>PS</h3>         
+            <ion-progress-bar class="ps_bar_container" value="100"></ion-progress-bar>
           </div>
+          } 
+            <div class="poke1_container">
+              <img src="{{ level_fuego_pokemons }}">
+            </div>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -28,7 +34,7 @@
           <ion-button size="large" fill="outline" (click)="playLevel()">Jugar nivel</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button size="large" fill="outline" (click)="goToTeam">Editar Equipo</ion-button>
+          <ion-button size="large" fill="outline" (click)="goToTeam()">Editar Equipo</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

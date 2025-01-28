@@ -68,12 +68,12 @@ export class TeamPage implements OnInit {
       // Post a la tabla de equipo hace falta saber q user esta logueado
 
       let team_finish = {
-        poke_position1: this.items[0].name,
-        poke_position2: this.items[1].name,
-        poke_position3: this.items[2].name,
-        poke_position4: this.items[3].name,
-        poke_position5: this.items[4].name,
-        poke_position6: this.items[5].name,
+        poke_position1: this.items[0].id,
+        poke_position2: this.items[1].id,
+        poke_position3: this.items[2].id,
+        poke_position4: this.items[3].id,
+        poke_position5: this.items[4].id,
+        poke_position6: this.items[5].id,
         poke_img1: this.items[0].sprites.front_default,
         poke_img2: this.items[1].sprites.front_default,
         poke_img3: this.items[2].sprites.front_default,
