@@ -5,6 +5,9 @@ import { IonicModule } from '@ionic/angular';
 import {ModalComponent} from '../modal/modal.component';
 import { ModalController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
+import { HttpClient } from '@angular/common/http';
+
 
 
 @Component({
@@ -18,7 +21,9 @@ export class HomePage implements OnInit {
 
   message = '';
 
-  constructor(private modalCtrl: ModalController, private router: Router) { }
+  public user: any;
+
+  constructor(private modalCtrl: ModalController, private router: Router,private auth: AuthService,private http: HttpClient) { }
 
   // componente modal
 
@@ -48,6 +53,41 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.auth.user$.subscribe(data => {
+      this.user = data
+      console.log('user', this.user);
+
+      this.loadUser()
+      // createUser();
+    });
+
+    
+  }
+
+  loadUser() {
+
+    this.http.get('http://localhost:3001/users/' + this.user.ema).subscribe((response) => {
+      console.log(response);
+
+      if(response == "not found"){
+        this.createUser();
+      }
+    });
+
+  }
+
+  createUser() {
+
+    let new_user = {
+      email: this.user.email,
+      name: this.user.name,
+      nickname: this.user.nickname,
+      picture: this.user.picture
+    }
+
+    this.http.post('http://localhost:3001/users', new_user).subscribe((response) => {
+      console.log(response);
+    });
   }
 
 
