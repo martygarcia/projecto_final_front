@@ -10,16 +10,28 @@
             <h3>PS</h3>         
             <ion-progress-bar class="ps_bar_container" value="100"></ion-progress-bar>
           </div>
-          } 
+          
             <div class="poke1_container">
               <img src="{{ level_fuego_pokemons }}">
             </div>
+          } 
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col offset="0.5" size="4">
           <div class="poke2_container">
-            fdsfs
+            @if (hola == true){
+              <div class="ps_container">
+                <h3>PS</h3>         
+                <ion-progress-bar class="ps_bar_container" value="100"></ion-progress-bar>
+              </div>
+              } 
+            @if (user_poke == true){
+
+            <img src="{{ user_team[0].poke_img1 }}">
+
+            }
+
           </div>
         </ion-col>
       </ion-row>

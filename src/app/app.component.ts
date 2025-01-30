@@ -32,9 +32,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('http://localhost:3001/users').subscribe((response) => {
-      console.log(response);
-      this.data_login = response;
-    });
+
   }
 }

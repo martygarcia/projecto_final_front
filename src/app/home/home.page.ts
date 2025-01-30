@@ -65,14 +65,13 @@ export class HomePage implements OnInit {
   }
 
   loadUser() {
-
-    this.http.get('http://localhost:3001/users/' + this.user.ema).subscribe((response) => {
-      console.log(response);
-
+    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+      console.log( response);
+      console.log(this.user.email);
       if(response == "not found"){
         this.createUser();
       }
-    });
+    }); 
 
   }
 
@@ -80,12 +79,10 @@ export class HomePage implements OnInit {
 
     let new_user = {
       email: this.user.email,
-      name: this.user.name,
-      nickname: this.user.nickname,
-      picture: this.user.picture
+      name: this.user.name
     }
 
-    this.http.post('http://localhost:3001/users', new_user).subscribe((response) => {
+    this.http.post('http://localhost:3001/add_user', new_user).subscribe((response) => {
       console.log(response);
     });
   }

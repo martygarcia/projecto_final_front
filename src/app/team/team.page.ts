@@ -80,7 +80,7 @@ export class TeamPage implements OnInit {
         poke_img4: this.items[3].sprites.front_default,
         poke_img5: this.items[4].sprites.front_default,
         poke_img6: this.items[5].sprites.front_default,
-        id_users: 1
+        id_users: 5
       }
       console.log(team_finish)
     //Post 

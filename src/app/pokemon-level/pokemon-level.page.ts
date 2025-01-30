@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 
 
 
@@ -21,10 +22,22 @@ export class PokemonLevelPage implements OnInit {
   public level_fuego:any = [];
   public level_fuego_pokemons:any = [];
   public hola:boolean = false;
+  public user: any;
+  public user_team!: any;
+  public user_poke:boolean = false;
 
-  constructor( private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
+  constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
   ngOnInit() {
+
+    this.auth.user$.subscribe(data => {
+      this.user = data
+      console.log('user', this.user);
+
+      this.loadUser()
+      // createUser();
+    });
+
     this.level_number = this.route.snapshot.paramMap.get('data');
     console.log('ngOnInit pokemon level', this.level_number);
 
@@ -35,8 +48,18 @@ export class PokemonLevelPage implements OnInit {
         console.log(this.level_fuego);
       });
 
+
+
     }
   }
+
+  loadUser() {
+    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+      console.log( response);
+      console.log(this.user.email);
+    });
+  }
+
 
   goToTeam(){
     this.router.navigate(['/team']);
@@ -44,16 +67,25 @@ export class PokemonLevelPage implements OnInit {
 
   playLevel(){
 
-    this.hola = true;
-    console.log(this.hola);
 
     this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.level_fuego[0].poke1).subscribe((response) => {
       this.level_fuego_pokemons = response;
-      this.level_fuego_pokemons = this.level_fuego_pokemons.sprites.front_default
-      console.log( this.level_fuego_pokemons.sprites.front_default);
+      console.log( this.level_fuego_pokemons);
 
+      this.level_fuego_pokemons = this.level_fuego_pokemons.sprites.front_default
+      this.hola = true;
+    });
+    
+    this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response) => {
+      console.log(response);
+      this.user_team = response;
+
+      this.user_poke = true;
 
     }); 
+
+
+
 
 }
 }
