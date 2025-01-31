@@ -1,7 +1,10 @@
 <ion-content [fullscreen]="true">
 
+  @if(auth.isAuthenticated$ | async ){
   <ion-button (click)="login()">Log in</ion-button>
-
-  <p>User name : </p>
+}
+  
+    <ion-button (click)="logout()">Log out</ion-button>
+    
 
 </ion-content>

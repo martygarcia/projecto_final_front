@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, Inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from '@auth0/auth0-angular';
@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private auth: AuthService, private http: HttpClient) { }
+  constructor( @Inject(DOCUMENT) public document: Document ,public auth: AuthService, private http: HttpClient, ) { }
 
   ngOnInit() {
   }
@@ -27,5 +27,14 @@ export class LoginPage implements OnInit {
       }
     });
   }
+
+  logout() {
+    this.auth.logout({ 
+      logoutParams: {
+        returnTo: this.document.location.origin 
+      }
+    });
+
+}
 
 }

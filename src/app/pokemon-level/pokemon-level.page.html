@@ -5,7 +5,7 @@
     <ion-grid>
       <ion-row>
         <ion-col offset="8">
-          @if (hola == true){
+          @if (ai_poke == true){
           <div class="ps_container">
             <h3>PS</h3>         
             <ion-progress-bar class="ps_bar_container" value="100"></ion-progress-bar>
@@ -20,7 +20,7 @@
       <ion-row>
         <ion-col offset="0.5" size="4">
           <div class="poke2_container">
-            @if (hola == true){
+            @if (ai_poke == true){
               <div class="ps_container">
                 <h3>PS</h3>         
                 <ion-progress-bar class="ps_bar_container" value="100"></ion-progress-bar>
@@ -28,7 +28,7 @@
               } 
             @if (user_poke == true){
 
-            <img src="{{ user_team[0].poke_img1 }}">
+              <img src="{{ user_team[0].poke_img1 }}">
 
             }
 
@@ -40,14 +40,25 @@
           <!-- texto de lo q este pasando en el combate -->
 
         level: {{ level_number }}, Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque reprehenderit nisi placeat facere laboriosam vel asperiores. Aspernatur culpa aperiam neque dolorem, praesentium necessitatibus eaque sequi dolore voluptatum enim
-          
+    
         </ion-col>
+        @if (see_atack == false){
         <ion-col>
           <ion-button size="large" fill="outline" (click)="playLevel()">Jugar nivel</ion-button>
         </ion-col>
         <ion-col>
           <ion-button size="large" fill="outline" (click)="goToTeam()">Editar Equipo</ion-button>
         </ion-col>
+        }
+        @if (see_atack == true){
+          <ion-col (click)="atack(0)" class="atack_container">
+            <p>{{ user_pokemon_atack.abilities[0]?.ability.name }}</p>
+          </ion-col>
+          <ion-col (click)="atack(1)" class="atack_container">
+            <p>{{ user_pokemon_atack.abilities[1]?.ability.name }}</p>
+          </ion-col>
+
+        }
       </ion-row>
     </ion-grid>
 

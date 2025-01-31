@@ -21,10 +21,13 @@ export class PokemonLevelPage implements OnInit {
   public level_number!: any;
   public level_fuego:any = [];
   public level_fuego_pokemons:any = [];
-  public hola:boolean = false;
+  public ai_poke:boolean = false;
   public user: any;
   public user_team!: any;
   public user_poke:boolean = false;
+  public see_atack:boolean = false;
+  public pokemon_atack:any = [];
+  public user_pokemon_atack:any = [];
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -73,7 +76,7 @@ export class PokemonLevelPage implements OnInit {
       console.log( this.level_fuego_pokemons);
 
       this.level_fuego_pokemons = this.level_fuego_pokemons.sprites.front_default
-      this.hola = true;
+      this.ai_poke = true;
     });
     
     this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response) => {
@@ -81,11 +84,19 @@ export class PokemonLevelPage implements OnInit {
       this.user_team = response;
 
       this.user_poke = true;
+    
+
+      this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.user_team[0].poke_position1).subscribe((response) => {
+        console.log(response);
+        this.user_pokemon_atack = response;
+
+        this.see_atack = true;
+      });
 
     }); 
+}
 
-
-
-
+atack(atack_number:any){
+  console.log(atack_number);
 }
 }
