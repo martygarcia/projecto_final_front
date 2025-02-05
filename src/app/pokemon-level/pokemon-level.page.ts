@@ -28,6 +28,9 @@ export class PokemonLevelPage implements OnInit {
   public see_atack:boolean = false;
   public pokemon_atack:any = [];
   public user_pokemon_atack:any = [];
+  public pokemon_user!:any
+  public is_user_turn:boolean = false
+  public is_finished:boolean = false
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -82,6 +85,7 @@ export class PokemonLevelPage implements OnInit {
     this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response) => {
       console.log(response);
       this.user_team = response;
+      this.pokemon_user = this.user_team[0]
 
       this.user_poke = true;
     
@@ -93,10 +97,56 @@ export class PokemonLevelPage implements OnInit {
         this.see_atack = true;
       });
 
+      this.start()
+
     }); 
 }
 
-atack(atack_number:any){
-  console.log(atack_number);
+atack(){
+
+  if(this.is_user_turn != true){
+
+    let damage = this.calcular_dano()
+    // comprobar si el pokemon esta vivo y restar barra de vida
+    // cpu turn
+  }else {
+    
+    // user turn
+    this.cpu_turn()
+  }
+}
+
+start(){
+  if(this.level_fuego_pokemons.stats[5].base_stat > this.pokemon_user.stats[5].base_stat){
+    this.is_user_turn = false
+    this.cpu_turn()
+  }else {
+    this.is_user_turn = true
+  }
+
+}
+
+cpu_turn(){
+
+
+  this.is_user_turn = true
+
+}
+
+calcular_dano(){
+
+  let damage:number = 0
+  if(this.is_user_turn != true){
+
+    damage = this.level_fuego_pokemons.stats[1].base_stat / 5
+    // cpu turn
+  }else {
+    
+
+    damage = this.pokemon_user.stats[1].base_stat / 5
+    // user turn
+  }
+
+  return damage
 }
 }
