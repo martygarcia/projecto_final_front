@@ -60,7 +60,7 @@ ion-grid {
 
         p {
             font-size: 1.5rem;
-            margin: 5rem 0 0 0 ;
+            margin: 3.5rem 0 0 0 ;
         }
     }
 
@@ -72,13 +72,20 @@ ion-grid {
 
 .ps_container {
     display: flex;
+    font-size: 1.5rem;
 
     h3 {
-        margin: 1rem 1rem 0 0;
+        font-size: 1.2rem;
+        margin: 1rem 0.5rem 0 0;
+    }
+
+    p {
+        margin: 0.9rem 1rem 0 0 ;
+        font-size: 1.3rem;
     }
 
     .ps_bar_container{
-        margin: 1.7rem 0 0 0;
+        margin: 1.6rem 0 0 0;
     }
 
 }

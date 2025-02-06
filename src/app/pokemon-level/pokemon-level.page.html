@@ -7,12 +7,13 @@
         <ion-col offset="8">
           @if (ai_poke == true){
           <div class="ps_container">
-            <h3>PS</h3>         
-            <ion-progress-bar value="1"></ion-progress-bar>
+            <h3>PS:</h3>         
+            <p>{{ level_fuego_pokemons.stats[0].base_stat }}</p>
+            <ion-progress-bar class="ps_bar_container" value="1"></ion-progress-bar>
           </div>
           
             <div class="poke1_container">
-              <img src="{{ level_fuego_pokemons }}">
+              <img src="{{ level_fuego_pokemons.sprites.front_default }}">
             </div>
           } 
         </ion-col>
@@ -22,8 +23,9 @@
           <div class="poke2_container">
             @if (ai_poke == true){
               <div class="ps_container">
-                <h3>PS</h3>         
-                <ion-progress-bar class="ps_bar_container" value="50"></ion-progress-bar>
+                <h3>PS:</h3>         
+                <p> {{user_pokemon_atack?.stats[0].base_stat}}</p>
+            <ion-progress-bar class="ps_bar_container" value="1"></ion-progress-bar>
               </div>
               } 
             @if (user_poke == true){
@@ -51,11 +53,11 @@
         </ion-col>
         }
         @if (see_atack == true){
-          <ion-col (click)="atack(0)" class="atack_container">
-            <p>{{ user_pokemon_atack.abilities[0]?.ability.name }}</p>
+          <ion-col (click)="atack('atack')" class="atack_container">
+            <p>ATACAR</p>
           </ion-col>
-          <ion-col (click)="atack(1)" class="atack_container">
-            <p>{{ user_pokemon_atack.abilities[1]?.ability.name }}</p>
+          <ion-col (click)="atack('defence')" class="atack_container">
+            <p>DEFENDER</p>
           </ion-col>
 
         }
