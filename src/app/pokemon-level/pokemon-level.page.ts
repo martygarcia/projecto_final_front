@@ -33,6 +33,8 @@ export class PokemonLevelPage implements OnInit {
   public is_user_turn:boolean = true
   public is_finished:boolean = false
   public prueba!:any 
+  public ps_cpu:number = 1
+  public ps_user:number = 1
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -95,8 +97,6 @@ export class PokemonLevelPage implements OnInit {
         this.prueba = response
         this.see_atack = true;
         this.ai_poke = true;
-
-
       });
 
 
@@ -107,18 +107,34 @@ export class PokemonLevelPage implements OnInit {
 
 atack(what_is_doing:string){
 
+
   console.log(what_is_doing)
 
   if(what_is_doing == "atack"){
 
     let damage = this.calcular_dano()
     console.log(damage)
+
+    if(this.is_user_turn == true){
+
+      if(this.ps_cpu > 0 ){
+        this.ps_cpu =  this.ps_cpu - (damage * 0.01)
+        console.log(this.ps_cpu)
+  
+        if(this.ps_cpu <= 0 ){
+          console.log("la cpu ha muerto")
+        }
+  
+        this.is_user_turn = false
+  
+        this.cpu_turn()
+      }
+
+    }
     // comprobar si el pokemon esta vivo y restar barra de vida
-    // cpu turn
   }else {
-    
-    // user turn
-    this.cpu_turn()
+
+
   }
 }
 
@@ -146,14 +162,37 @@ start(){
 cpu_turn(){
 
 
+console.log("esto es el turno de la maquina")
+
+let cpu_move = Math.floor(Math.random() * 2) + 1;
+
+if(cpu_move == 1){
+  console.log("dano de la cpu")
+
+  let damage = this.calcular_dano()
+
+  if(this.ps_cpu > 0 ){
+    this.ps_user =  this.ps_user - (damage * 0.01)
+    console.log(this.ps_cpu)
+
+    if(this.ps_cpu <= 0 ){
+      console.log("el user ha muerto")
+    }
+
+    this.is_user_turn = false
+
+    this.cpu_turn()
+  }
+}else {
+  console.log("esto es la defensa")
+}
+
+
   this.is_user_turn = true
 
 }
 
 calcular_dano(){
-
-  console.log("Ataque base")
-  console.log(this.level_fuego_pokemons.stats[1].base_stat)
 
   let damage:number = 0
 
@@ -168,11 +207,15 @@ calcular_dano(){
 
     damage = numeroRedondeado1Num
     damage.toFixed(1)
+
+    console.log(damage)
+
+    // this.ps_user = (damage * 0.1) - this.ps_cpu
     // console.log(numeroRedondeado1Num)
 
     // cpu turn
   }else {
-    console.log("turno usuario  ")
+    console.log("turno usuario")
     damage = this.user_pokemon_atack.base_experience / (this.user_pokemon_atack.stats[1].base_stat * 0.10)
 
     let numeroRedondeado1: string = damage.toFixed(0);
@@ -180,6 +223,9 @@ calcular_dano(){
     damage.toFixed(1)
     
     damage = numeroRedondeado1Num
+
+    // this.ps_cpu =  this.ps_user - (damage * 0.01)
+    // console.log(this.ps_user)
     // user turn
   }
 

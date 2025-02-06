@@ -9,7 +9,7 @@
           <div class="ps_container">
             <h3>PS:</h3>         
             <p>{{ level_fuego_pokemons.stats[0].base_stat }}</p>
-            <ion-progress-bar class="ps_bar_container" value="1"></ion-progress-bar>
+            <ion-progress-bar class="ps_bar_container" value="{{ ps_cpu }}"></ion-progress-bar>
           </div>
           
             <div class="poke1_container">
@@ -25,7 +25,7 @@
               <div class="ps_container">
                 <h3>PS:</h3>         
                 <p> {{user_pokemon_atack?.stats[0].base_stat}}</p>
-            <ion-progress-bar class="ps_bar_container" value="1"></ion-progress-bar>
+            <ion-progress-bar class="ps_bar_container" value="{{ ps_user }}"></ion-progress-bar>
               </div>
               } 
             @if (user_poke == true){
