@@ -38,6 +38,7 @@ export class PokemonLevelPage implements OnInit {
   public is_defence_user:boolean = false
   public is_defence_cpu:boolean = false
   public ramdon_defence:number = 0
+  public random_cpu_turn:number = 0
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -123,29 +124,36 @@ atack(what_is_doing:string){
       if(this.ps_cpu > 0 ){
 
         this.ramdomDefence()
-        this.cpu_turn()
+        console.log(this.random_cpu_turn)
 
-        // falta comprobar la defensa de la cpu y hacer q funcione los calculos
+        if(this.random_cpu_turn == 2){
 
-        if(this.is_defence_cpu == true){
+          if(this.is_defence_cpu == true){
 
-          console.log("defensa de la maquina true")
+            console.log("defensa de la maquina true")
+  
+            if(this.ramdon_defence == 1){
+  
+              this.ps_cpu =  this.ps_cpu - (damage * 0.01)
+              console.log(this.ps_cpu)
+              console.log("defensa de la cpu y aplicado el daño modificado")
+            }else if (this.ramdon_defence == 2){
+              this.ps_cpu =  this.ps_cpu - ((damage * 0.01) / 3)
+              console.log(this.ps_cpu)
+              console.log("defensa de la cpu y aplicado el daño modificado")
 
-          if(this.ramdon_defence == 1){
+            }else {
+              this.ps_cpu =  this.ps_cpu - 0
+              console.log(this.ps_cpu)
+              console.log("defensa de la cpu y aplicado el daño modificado")
 
-            this.ps_cpu =  this.ps_cpu - (damage * 0.01)
-            console.log(this.ps_cpu)
-          }else if (this.ramdon_defence == 2){
-            this.ps_cpu =  this.ps_cpu - ((damage * 0.01) / 3)
-            console.log(this.ps_cpu)
-          }else {
-            this.ps_cpu =  this.ps_cpu - 0
-            console.log(this.ps_cpu)
+            }
+  
           }
 
         }
-
         this.is_defence_cpu == false
+        console.log("hola lo hago sin defensa de pokemon")
 
         this.ps_cpu =  this.ps_cpu - (damage * 0.01)
         console.log(this.ps_cpu)
@@ -177,7 +185,7 @@ atack(what_is_doing:string){
 }
 
 ramdomDefence(){
-  this.ramdon_defence = Math.floor(Math.random() * 3) + 1;
+  this.random_cpu_turn = Math.floor(Math.random() * 3) + 1;
 }
 
 start(){
@@ -201,16 +209,24 @@ start(){
 
 }
 
+random_move_cpu(){
+
+  this.random_cpu_turn = Math.floor(Math.random() * 2) + 1;
+
+
+  console.log("este es el turno" + this.random_cpu_turn)
+}
+  
+
 cpu_turn(){
 
-
+  
 console.log("esto es el turno de la maquina")
-
-let cpu_move = Math.floor(Math.random() * 2) + 1;  
 // let cpu_move = 1;
 
+this.random_move_cpu()
 
-if(cpu_move == 1){
+if(this.random_cpu_turn == 1){
   console.log("dano de la cpu")
 
   let damage = this.calcular_dano()
@@ -252,10 +268,9 @@ if(cpu_move == 1){
 }else {
 
   console.log("defensa de cpu")
-
-  this.ramdomDefence()
-
+  
   this.is_defence_cpu == true
+
   
 }
 
