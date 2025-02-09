@@ -39,6 +39,12 @@ export class PokemonLevelPage implements OnInit {
   public is_defence_cpu:boolean = false
   public ramdon_defence:number = 0
   public random_cpu_turn:number = 0
+  public what_is_doing_text:string = ""
+  public array_pokemons_cpu!:any
+  public array_pokemons_user!:any
+  public array_img_pokemons_user!:any
+  public number_cpu_pokemons:number = 0
+  public number_user_pokemons:number = 0
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -60,6 +66,15 @@ export class PokemonLevelPage implements OnInit {
       this.http.get('http://localhost:3001/fuego').subscribe((response) => {
         this.level_fuego = response;
         console.log(this.level_fuego);
+
+        this.array_pokemons_cpu = [
+          this.level_fuego[0].poke1,
+          this.level_fuego[0].poke2,
+          this.level_fuego[0].poke3,
+          this.level_fuego[0].poke4,
+          this.level_fuego[0].poke5,
+          this.level_fuego[0].poke6,
+        ]
       });
 
     }
@@ -77,24 +92,49 @@ export class PokemonLevelPage implements OnInit {
     this.router.navigate(['/team']);
   }
 
+  pokemons_fuego_db(){
+    this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_cpu[this.number_cpu_pokemons]).subscribe((response) => {
+      this.level_fuego_pokemons = response;
+      console.log("esto es el pokemon de maquina q va a jugar" +  this.level_fuego_pokemons);
+    
+    });
+  }
+
   playLevel(){
 
-
-    this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.level_fuego[0].poke1).subscribe((response) => {
-      this.level_fuego_pokemons = response;
-      console.log( this.level_fuego_pokemons);
-      
-    });
+    this.pokemons_fuego_db()
     
     this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response) => {
       console.log(response);
       this.user_team = response;
-      this.pokemon_user = this.user_team[0]
 
       this.user_poke = true;
+
+      //pokemons del equipo del usuario
+
+      this.array_pokemons_user = [
+        this.user_team[0].poke_position1,
+        this.user_team[0].poke_position2,
+        this.user_team[0].poke_position3,
+        this.user_team[0].poke_position4,
+        this.user_team[0].poke_position5,
+        this.user_team[0].poke_position6,
+      ]
+
+      //imagenes de los pokemon de nuestro equipo
+
+      this.array_img_pokemons_user = [
+        this.user_team[0].poke_img1,
+        this.user_team[0].poke_img2,
+        this.user_team[0].poke_img3,
+        this.user_team[0].poke_img4,
+        this.user_team[0].poke_img5,
+        this.user_team[0].poke_img6,
+        
+      ]
     
 
-      this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.user_team[0].poke_position1).subscribe((response) => {
+      this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_user[2]).subscribe((response) => {
         this.user_pokemon_atack = response;
         console.log("obkjeto de usuario")
         console.log(this.user_pokemon_atack)
@@ -104,9 +144,9 @@ export class PokemonLevelPage implements OnInit {
       });
 
 
-      // this.start()
-
     }); 
+
+    this.what_is_doing_text = "EL RIVAL HA SACADO UN POKEMON, ATENTO"
 }
 
 atack(what_is_doing:string){
@@ -117,49 +157,57 @@ atack(what_is_doing:string){
   if(what_is_doing == "atack"){
 
     let damage = this.calcular_dano()
+    console.log("esto el damage")
     console.log(damage)
+
+    this.is_defence_cpu == false
 
     if(this.is_user_turn == true){
 
       if(this.ps_cpu > 0 ){
 
-        this.ramdomDefence()
-        console.log(this.random_cpu_turn)
+        this.random_move_cpu()
 
+        // compruebo si la cpu va a hacer defensa con el "2" y en caso q lo haga se apliquen los danos correspodientes
         if(this.random_cpu_turn == 2){
+          this.ramdomDefence()
 
-          if(this.is_defence_cpu == true){
+          console.log("la cpu se esta defendiendo")
 
-            console.log("defensa de la maquina true")
-  
-            if(this.ramdon_defence == 1){
-  
-              this.ps_cpu =  this.ps_cpu - (damage * 0.01)
-              console.log(this.ps_cpu)
-              console.log("defensa de la cpu y aplicado el daño modificado")
-            }else if (this.ramdon_defence == 2){
-              this.ps_cpu =  this.ps_cpu - ((damage * 0.01) / 3)
-              console.log(this.ps_cpu)
-              console.log("defensa de la cpu y aplicado el daño modificado")
+          if(this.ramdon_defence == 1){
+            this.ps_cpu =  this.ps_cpu - ((damage  * 0.01)) 
+            console.log("defensa 1 " + this.ps_cpu + this.ramdon_defence)
+            console.log("Daño con defensa 1 el daño es el normal")
+            this.what_is_doing_text = "EL RIVAL HA USADO DEFENSA PERO NO HA TENIDO SUERTE, EL ATAQUE LE HA DADO"
+            this.pokemon_is_alive()
+    
+          }else if(this.ramdon_defence == 2){
+            this.ps_cpu =  this.ps_cpu - ((damage  * 0.01) / 3) 
+            console.log("daño con defensa 2 " + this.ps_cpu + this.ramdon_defence)
+            console.log("Daño con defensa 2 el daño se divide entre 3")
+            this.what_is_doing_text = "EL RIVAL HA USADO DEFENSA PERO HA ESQUIEVADO GRAN PARTE DE TU ATAQUE"
+            this.pokemon_is_alive()
 
-            }else {
-              this.ps_cpu =  this.ps_cpu - 0
-              console.log(this.ps_cpu)
-              console.log("defensa de la cpu y aplicado el daño modificado")
+    
+          }else if(this.ramdon_defence == 3) {
+            this.ps_cpu =  this.ps_cpu - 0
+            console.log("defensa 3 " + this.ps_cpu + " " + this.ramdon_defence)
+            console.log("Daño con defensa 3 no tienes ningun tipo daño")
+            this.what_is_doing_text = "EL RIVAL HA USADO DEFENSA Y NO LE HAS NI UN RASGUNO "
+            this.pokemon_is_alive()
 
-            }
-  
           }
+        }else {
 
-        }
-        this.is_defence_cpu == false
-        console.log("hola lo hago sin defensa de pokemon")
+          console.log("hola lo hago sin defensa de pokemon")
 
-        this.ps_cpu =  this.ps_cpu - (damage * 0.01)
-        console.log(this.ps_cpu)
-  
-        if(this.ps_cpu <= 0 ){
-          console.log("la cpu ha muerto")
+          this.what_is_doing_text = "EL RIVAL HA TE HA ATACADO"
+
+
+          this.ps_cpu =  this.ps_cpu - (damage * 0.01)
+          console.log(this.ps_cpu)
+          this.pokemon_is_alive()
+
         }
   
         this.is_user_turn = false
@@ -179,13 +227,28 @@ atack(what_is_doing:string){
     console.log(this.ramdon_defence)
 
     this.cpu_turn()
+  }
+}
 
+pokemon_is_alive(){
+  if(this.ps_cpu <= 0){
+    this.what_is_doing_text = "EL POKEMON DEL RIVAL SE HA DEBILITADO"
+    this.ps_cpu = 1
+    console.log("aqui va el nuevo pokemon")
 
+    this.number_cpu_pokemons ++
+    console.log(this.number_cpu_pokemons)
+    this.pokemons_fuego_db()
+  }else if(this.ps_user <= 0){
+    this.what_is_doing_text = "TU POKEMON SE HA DEBILITADO"
+    this.number_cpu_pokemons ++
+    this.number_user_pokemons ++
+    this.ps_user = 1
   }
 }
 
 ramdomDefence(){
-  this.random_cpu_turn = Math.floor(Math.random() * 3) + 1;
+  this.ramdon_defence = Math.floor(Math.random() * 3) + 1;
 }
 
 start(){
@@ -215,7 +278,7 @@ random_move_cpu(){
 
 
   console.log("este es el turno" + this.random_cpu_turn)
-}
+} 
   
 
 cpu_turn(){
@@ -224,7 +287,8 @@ cpu_turn(){
 console.log("esto es el turno de la maquina")
 // let cpu_move = 1;
 
-this.random_move_cpu()
+// compruebo si la cpu va a hacer ataque con el "1" y en caso q lo haga se apliquen los danos correspodientes
+
 
 if(this.random_cpu_turn == 1){
   console.log("dano de la cpu")
@@ -238,16 +302,21 @@ if(this.random_cpu_turn == 1){
         this.ps_user =  this.ps_user - ((damage  * 0.01)) 
         console.log("defensa 1 " + this.ps_user + this.ramdon_defence)
         console.log("Daño con defensa 1 el daño es el normal")
+        this.pokemon_is_alive()
 
       }else if(this.ramdon_defence == 2){
         this.ps_user =  this.ps_user - ((damage  * 0.01) / 3) 
         console.log("daño con defensa 2 " + this.ps_user + this.ramdon_defence)
         console.log("Daño con defensa 2 el daño se divide entre 3")
+        this.pokemon_is_alive()
+
 
       }else if(this.ramdon_defence == 3) {
         this.ps_user =  this.ps_user - 0
         console.log("defensa 3 " + this.ps_user + " " + this.ramdon_defence)
         console.log("Daño con defensa 3 no tienes ningun tipo daño")
+        this.pokemon_is_alive()
+
       }
       this.is_user_turn = false
     }else{
@@ -255,6 +324,7 @@ if(this.random_cpu_turn == 1){
       console.log(this.ps_cpu)
 
       console.log("daño sin defensa" + damage)
+      this.pokemon_is_alive()
 
     }
 

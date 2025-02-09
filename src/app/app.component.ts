@@ -7,7 +7,9 @@ import * as Icons from 'ionicons/icons';
 import { IonicModule } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-
+import { AuthService } from '@auth0/auth0-angular';
+import {Inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 
 
 
@@ -27,11 +29,37 @@ export class AppComponent implements OnInit {
     { title: 'Estadisticas', url: '/stats', icon: 'people' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(private http: HttpClient) {
+  constructor( @Inject(DOCUMENT) public document: Document ,public auth: AuthService, private http: HttpClient, ) { 
     addIcons( Icons );
   }
 
+  public user: any;
+
   ngOnInit() {
 
+
+    this.auth.user$.subscribe(data => {
+      this.user = data
+      console.log('user', this.user);
+
+      this.loadUser()
+      // createUser();
+    });
   }
+
+
+  loadUser() {
+    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+      console.log( response);
+      console.log(this.user.email);
+    });
+  }
+  logout() {
+    this.auth.logout({ 
+      logoutParams: {
+        returnTo: this.document.location.origin 
+      }
+    });
+
+}
 }
