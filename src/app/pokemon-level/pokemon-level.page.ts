@@ -45,6 +45,8 @@ export class PokemonLevelPage implements OnInit {
   public array_img_pokemons_user!:any
   public number_cpu_pokemons:number = 0
   public number_user_pokemons:number = 0
+  public finish_battle:boolean = true
+  public win_or_lose:string = "win"
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -134,7 +136,7 @@ export class PokemonLevelPage implements OnInit {
       ]
     
 
-      this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_user[2]).subscribe((response) => {
+      this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_user[this.number_user_pokemons]).subscribe((response) => {
         this.user_pokemon_atack = response;
         console.log("obkjeto de usuario")
         console.log(this.user_pokemon_atack)
@@ -232,18 +234,32 @@ atack(what_is_doing:string){
 
 pokemon_is_alive(){
   if(this.ps_cpu <= 0){
+
     this.what_is_doing_text = "EL POKEMON DEL RIVAL SE HA DEBILITADO"
     this.ps_cpu = 1
     console.log("aqui va el nuevo pokemon")
-
     this.number_cpu_pokemons ++
     console.log(this.number_cpu_pokemons)
     this.pokemons_fuego_db()
+    this.winOrLose()
   }else if(this.ps_user <= 0){
-    this.what_is_doing_text = "TU POKEMON SE HA DEBILITADO"
+    console.log("Has perdido pringado")
     this.number_cpu_pokemons ++
     this.number_user_pokemons ++
     this.ps_user = 1
+    this.winOrLose()
+  }
+}
+
+winOrLose(){
+  if(this.number_cpu_pokemons > 5){
+    this.finish_battle = false
+    this.win_or_lose = "win"
+
+  }else if (this.number_cpu_pokemons > 5){
+    this.what_is_doing_text = "Has ganado"
+    this.finish_battle = false
+    this.win_or_lose = "lose"
   }
 }
 
@@ -309,7 +325,6 @@ if(this.random_cpu_turn == 1){
         console.log("daño con defensa 2 " + this.ps_user + this.ramdon_defence)
         console.log("Daño con defensa 2 el daño se divide entre 3")
         this.pokemon_is_alive()
-
 
       }else if(this.ramdon_defence == 3) {
         this.ps_user =  this.ps_user - 0
@@ -388,5 +403,14 @@ calcular_dano(){
   }
 
   return damage
+}
+
+goToHome(){
+  this.router.navigate(['/home']);
+    this.finish_battle = true
+    this.number_cpu_pokemons = 0
+    this.ps_user = 1
+    this.ps_cpu = 1
+    this.number_user_pokemons = 0
 }
 }

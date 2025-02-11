@@ -1,7 +1,20 @@
 <ion-content [fullscreen]="true">
 
+  @if(finish_battle != true && win_or_lose == "win"){
+    <h3>Has ganado </h3>
+    <ion-button>
+      Volver a la pantalla de inicio
+    </ion-button>
+  }@if(finish_battle != true && win_or_lose == "lose" ){
+    <h3>Has perdido </h3>
+    <ion-button (click)="goToHome()">
+      Volver a la pantalla de inicio
+    </ion-button>
+  }
+
   <div class="global-container">
 
+@if (finish_battle == true){
     <ion-grid>
       <ion-row>
         <ion-col offset="8">
@@ -28,7 +41,7 @@
             <ion-progress-bar class="ps_bar_container" value="{{ ps_user }}"></ion-progress-bar>
               </div>
               } 
-            @if (user_poke == true){
+            @if(user_poke == true){
 
               <img src="{{ array_img_pokemons_user[number_user_pokemons] }}">
 
@@ -63,7 +76,7 @@
         }
       </ion-row>
     </ion-grid>
-
+  }
   </div>
 
 </ion-content>
