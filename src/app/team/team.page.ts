@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { ItemReorderEventDetail} from '@ionic/angular/standalone';
 
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '@auth0/auth0-angular';
 
 
 @Component({
@@ -21,6 +22,10 @@ export class TeamPage implements OnInit {
   public poke_api_url:string = 'https://pokeapi.co/api/v2/pokemon/';
   public random_pokemon!:any 
   public saved_pokemon!:any
+  public user:any
+  public user_stats!:any
+  public is_load_user_stats:boolean = false
+  public array_load_user:any
 
   handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
@@ -36,12 +41,36 @@ export class TeamPage implements OnInit {
     console.log('After complete', this.items);
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   ngOnInit() {
-    // this.http.get(this.poke_api_url + this.random_pokemon).subscribe((response) => {
-    //   console.log(response);
-    // });
+    this.auth.user$.subscribe(data => {
+      this.user = data
+
+      this.loadUser()
+      // createUser();
+    });
+  }
+
+  loadUser() {
+    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+      console.log( response);
+
+      this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response:any) => {
+        this.user_stats = response
+        console.log( "esto es el jugardor con su equipo, hola");
+        console.log( this.user_stats );
+
+        if(this.user_stats != "user no encontrado pringado"){
+          this.is_load_user_stats = true
+
+          
+
+        }
+      });
+    });
+    
+    
   }
 
   randomPokemon(){
@@ -80,7 +109,7 @@ export class TeamPage implements OnInit {
         poke_img4: this.items[3].sprites.front_default,
         poke_img5: this.items[4].sprites.front_default,
         poke_img6: this.items[5].sprites.front_default,
-        id_users: 1
+        id_users: this.user_stats[0].id
       }
 
       console.log(team_finish)

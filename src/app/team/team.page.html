@@ -25,26 +25,52 @@
     <!-- Casting $event to $any is a temporary fix for this bug https://github.com/ionic-team/ionic-framework/issues/24245 -->
     <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
       @for (item of items; track item) {
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col class="pokemon_img">
-              <img src="{{ item.sprites.front_default }}" alt="">
-            </ion-col>
-            <ion-col>
-              {{ item.name }}
-            </ion-col>
-            <ion-col>
-              {{ item.types[0].type.name }}
-            </ion-col>
-            <ion-col>
-              PS : {{ item.stats[0].base_stat }}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        <ion-reorder slot="end"></ion-reorder>
-      </ion-item>
+
+
+      @if(is_load_user_stats == false){
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col class="pokemon_img">
+                <img src="{{ item.sprites.front_default }}" alt="">
+              </ion-col>
+              <ion-col>
+                {{ item.name }} 
+              </ion-col>
+              <ion-col>
+                {{ item.types[0].type.name }}
+              </ion-col>
+              <ion-col>
+                PS : {{ item.stats[0].base_stat }}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
       }
+      
+    @if(is_load_user_stats == true){
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col class="pokemon_img">
+                <img src="{{ item.sprites.front_default }}">
+              </ion-col>
+              <ion-col>
+                {{ item.name }} 
+              </ion-col>
+              <ion-col>
+                {{ item.types[0].type.name }}
+              </ion-col>
+              <ion-col>
+                PS : {{ item.stats[0].base_stat }}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+      }
+    }
     </ion-reorder-group>
   </ion-list>
 

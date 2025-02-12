@@ -2,45 +2,8 @@
 
   <ion-content>
     <ion-list>
-      @for (stat_img of stats_imgs; track stat_img;let index = $index;) {
-        <ion-list>
-          <ion-item>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-badge color={{stats_color[5]}}>{{ index + 1 }}</ion-badge>
-                </ion-col>
-                <ion-col>
-                  player name: {{ stat_img.name }}
-                </ion-col>
-                <ion-col>
-                  medallas : {{ stat_img.numero_medallas }}
-                </ion-col>
-                <ion-col>
-                  team  : 
-                </ion-col>
-                <ion-col>
-                  <img src="{{ stat_img.poke_img1 }}">
-                </ion-col>
-                <ion-col>
-                  <img src="{{ stat_img.poke_img2 }}">
-                </ion-col>
-                <ion-col>
-                  <img src="{{ stat_img.poke_img3 }}">
-                </ion-col>
-                <ion-col>
-                  <img src="{{ stat_img.poke_img4 }}">
-                </ion-col>
-                <ion-col>
-                  <img src="{{ stat_img.poke_img5 }}">
-                </ion-col>
-                <ion-col>
-                  <img src="{{ stat_img.poke_img6 }}">
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-list>
+      @for(stat_img of stats_imgs; track stat_img;let index = $index;) {
+        
       }
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
