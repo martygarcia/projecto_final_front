@@ -6,11 +6,16 @@ import { ItemReorderEventDetail} from '@ionic/angular/standalone';
 
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@auth0/auth0-angular';
+<<<<<<< HEAD
 import { IonContent, IonHeader, IonToolbar, IonTitle,
   IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
   IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
   , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar}
   from '@ionic/angular/standalone';
+=======
+import { compassOutline } from 'ionicons/icons';
+
+>>>>>>> 450731027d68ce118a692efffe2f2393531755d2
 
 @Component({
   selector: 'app-team',
@@ -31,7 +36,10 @@ export class TeamPage implements OnInit {
   public user:any
   public user_stats!:any
   public is_load_user_stats:boolean = false
-  public array_load_user:any
+  public array_imgs_load_user:any
+  public array_position_load_user:any
+  public array_poke_users_load:any[] = []
+  public user_load:any
 
   handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
@@ -61,6 +69,7 @@ export class TeamPage implements OnInit {
   loadUser() {
     this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
       console.log( response);
+      this.user_load = response
 
       this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response:any) => {
         this.user_stats = response
@@ -68,14 +77,33 @@ export class TeamPage implements OnInit {
         console.log( this.user_stats );
 
         if(this.user_stats != "user no encontrado pringado"){
-          this.is_load_user_stats = true
+  
 
-          
+          this.array_position_load_user = [
+            this.user_stats[0].poke_position1,
+            this.user_stats[0].poke_position2,
+            this.user_stats[0].poke_position3,
+            this.user_stats[0].poke_position4,
+            this.user_stats[0].poke_position5,
+            this.user_stats[0].poke_position6,
+          ]
 
+          console.log("array de equipo de users")
+          console.log(this.array_position_load_user)
+
+          for(let i = 0; i < 6; i++){
+            this.http.get(this.poke_api_url + this.array_position_load_user[i]).subscribe((response) => {
+              console.log("esto es la respuesta de los pokemon cartgados en usuarios");
+
+              this.array_poke_users_load.push(response)
+              console.log(this.array_poke_users_load);
+
+              this.is_load_user_stats = true
+            });
+          }
         }
       });
     });
-    
     
   }
 
@@ -100,6 +128,7 @@ export class TeamPage implements OnInit {
   saveTeam(){ 
     if(this.items.length == 6){
 
+      console.log(this.items[0].id)
       // Post a la tabla de equipo hace falta saber q user esta logueado
 
       let team_finish = {
@@ -115,7 +144,7 @@ export class TeamPage implements OnInit {
         poke_img4: this.items[3].sprites.front_default,
         poke_img5: this.items[4].sprites.front_default,
         poke_img6: this.items[5].sprites.front_default,
-        id_users: this.user_stats[0].id
+        id_users: this.user_load[0].id
       }
 
       console.log(team_finish)
@@ -128,6 +157,33 @@ export class TeamPage implements OnInit {
           console.error('Error al realizar la solicitud POST:', error);
         }
     );
+  }else if(this.array_poke_users_load.length == 6){
+
+    let team_finish = {
+      poke_position1: this.array_poke_users_load[0].id,
+      poke_position2: this.array_poke_users_load[1].id,
+      poke_position3: this.array_poke_users_load[2].id,
+      poke_position4: this.array_poke_users_load[3].id,
+      poke_position5: this.array_poke_users_load[4].id,
+      poke_position6: this.array_poke_users_load[5].id,
+      poke_img1: this.array_poke_users_load[0].sprites.front_default,
+      poke_img2: this.array_poke_users_load[1].sprites.front_default,
+      poke_img3: this.array_poke_users_load[2].sprites.front_default,
+      poke_img4: this.array_poke_users_load[3].sprites.front_default,
+      poke_img5: this.array_poke_users_load[4].sprites.front_default,
+      poke_img6: this.array_poke_users_load[5].sprites.front_default,
+      id_users: this.user_load[0].id
+    }
+    
+    this.http.put("http://localhost:3001/update_team/", team_finish).subscribe(
+  (response: any) => {
+    console.log('Respuesta del servidor:', response);
+  },
+  (error) => {
+    console.error('Error al realizar la solicitud POST:', error);
+  }
+);
+
   } else {
     console.log('Select 6 Pokemon');
     }
