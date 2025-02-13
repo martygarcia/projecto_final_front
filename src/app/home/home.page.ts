@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import {ModalComponent} from '../modal/modal.component';
 import { ModalController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { HttpClient } from '@angular/common/http';
-
+import { IonContent, IonHeader, IonToolbar, IonTitle,
+  IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
+  IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
+  , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar}
+  from '@ionic/angular/standalone';
 
 
 @Component({
@@ -15,7 +18,10 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, ModalComponent]
+  imports: [IonContent, IonHeader, IonToolbar, IonTitle,
+    IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
+    IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
+    , IonReorder, IonItem, IonReorderGroup,IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar]
 })
 export class HomePage implements OnInit {
 

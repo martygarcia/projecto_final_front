@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { flag } from 'ionicons/icons';
-
+import { IonContent, IonHeader, IonToolbar, IonTitle,
+  IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
+  IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
+  , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar}
+  from '@ionic/angular/standalone';
 
 
 @Component({
@@ -15,7 +18,10 @@ import { flag } from 'ionicons/icons';
   templateUrl: './pokemon-level.page.html',
   styleUrls: ['./pokemon-level.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonToolbar, IonTitle,
+    IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
+    IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
+    , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll,IonInfiniteScrollContent, IonProgressBar]
 })
 export class PokemonLevelPage implements OnInit {
 

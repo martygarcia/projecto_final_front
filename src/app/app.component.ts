@@ -4,12 +4,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 // import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as Icons from 'ionicons/icons';
-import { IonicModule } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@auth0/auth0-angular';
 import {Inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
+import { IonContent, IonHeader, IonToolbar, IonTitle,
+  IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
+  IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
+  , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent,
+  IonProgressBar}
+  from '@ionic/angular/standalone';
 
 
 
@@ -17,7 +22,11 @@ import { CommonModule, DOCUMENT } from '@angular/common';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [ RouterLink, RouterLinkActive ,IonicModule,HttpClientModule],
+  imports: [ IonContent, IonHeader, IonToolbar, IonTitle,
+    IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
+    IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
+    , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent,
+    IonProgressBar ,RouterLink, RouterLinkActive ,HttpClientModule],
 })
 export class AppComponent implements OnInit {
 
