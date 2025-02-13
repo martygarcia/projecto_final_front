@@ -53,6 +53,7 @@ export class PokemonLevelPage implements OnInit {
   public number_user_pokemons:number = 0
   public finish_battle:boolean = true
   public win_or_lose:string = "win"
+  public url:string = "https://proyecto-final-pokemon.web.app/"
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -71,7 +72,7 @@ export class PokemonLevelPage implements OnInit {
 
     if(this.level_number == 1){
 
-      this.http.get('http://localhost:3001/fuego').subscribe((response) => {
+      this.http.get(  this.url + 'fuego').subscribe((response) => {
         this.level_fuego = response;
         console.log(this.level_fuego);
 
@@ -89,7 +90,7 @@ export class PokemonLevelPage implements OnInit {
   }
 
   loadUser() {
-    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+    this.http.get(  this.url + '/users/' + this.user.email).subscribe((response:any) => {
       console.log( response);
       console.log(this.user.email);
     });
@@ -112,7 +113,7 @@ export class PokemonLevelPage implements OnInit {
 
     this.pokemons_fuego_db()
     
-    this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response) => {
+    this.http.get(  this.url + 'user_team/' + this.user.email).subscribe((response) => {
       console.log(response);
       this.user_team = response;
 

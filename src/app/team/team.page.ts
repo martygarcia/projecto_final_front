@@ -37,6 +37,8 @@ export class TeamPage implements OnInit {
   public array_position_load_user:any
   public array_poke_users_load:any[] = []
   public user_load:any
+  public url:string = "https://proyecto-final-pokemon.web.app/"
+
 
   handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
@@ -64,11 +66,11 @@ export class TeamPage implements OnInit {
   }
 
   loadUser() {
-    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+    this.http.get( this.url + 'users/' + this.user.email).subscribe((response:any) => {
       console.log( response);
       this.user_load = response
 
-      this.http.get('http://localhost:3001/user_team/' + this.user.email).subscribe((response:any) => {
+      this.http.get(  this.url + 'user_team/' + this.user.email).subscribe((response:any) => {
         this.user_stats = response
         console.log( "esto es el jugardor con su equipo, hola");
         console.log( this.user_stats );
@@ -146,7 +148,7 @@ export class TeamPage implements OnInit {
 
       console.log(team_finish)
     //Post 
-      this.http.post("http://localhost:3001/add_team", team_finish).subscribe(
+      this.http.post(  this.url + "add_team", team_finish).subscribe(
         (response: any) => {
           console.log('Respuesta del servidor:', response);
         },
@@ -172,7 +174,7 @@ export class TeamPage implements OnInit {
       id_users: this.user_load[0].id
     }
     
-    this.http.put("http://localhost:3001/update_team/", team_finish).subscribe(
+    this.http.put( this.url + "update_team/", team_finish).subscribe(
   (response: any) => {
     console.log('Respuesta del servidor:', response);
   },

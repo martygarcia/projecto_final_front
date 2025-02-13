@@ -27,9 +27,11 @@ export class StatsPage implements OnInit {
   public stats_imgs: any = [];
   public team: any = [];
   public stats_color: any = ["primary", "secondary", "tertiary", "success", "warning", "danger", "medium"];
+  public url:string = "https://proyecto-final-pokemon.web.app/"
+
 
   ngOnInit() {
-    this.http.get('http://localhost:3001/stats_and_team').subscribe((response) => {
+    this.http.get(  this.url + 'stats_and_team').subscribe((response) => {
       this.stats_imgs = response;
       console.log( "respuesta de api estadistnicas" + this.stats_imgs);
       console.log(this.stats_imgs);

@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
   message = '';
 
   public user: any;
+  public url:string = "https://proyecto-final-pokemon.web.app/"
 
   constructor(private modalCtrl: ModalController, private router: Router,private auth: AuthService,private http: HttpClient) { }
 
@@ -71,7 +72,7 @@ export class HomePage implements OnInit {
     }
 
     loadUser() {
-      this.http.get('https://prijecto-final-back-2.onrender.com/users/' + this.user.email).subscribe((response:any) => {
+      this.http.get( this.url + 'users/' + this.user.email).subscribe((response:any) => {
         console.log( response);
         console.log(this.user.email);
         if(response == "not found"){
@@ -88,7 +89,7 @@ export class HomePage implements OnInit {
         name: this.user.name
       }
 
-      this.http.post('https://prijecto-final-back-2.onrender.com/add_user', new_user).subscribe((response) => {
+      this.http.post(  this.url +'add_user', new_user).subscribe((response) => {
         console.log(response);
       });
     }
