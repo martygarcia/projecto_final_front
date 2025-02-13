@@ -6,16 +6,13 @@ import { ItemReorderEventDetail} from '@ionic/angular/standalone';
 
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@auth0/auth0-angular';
-<<<<<<< HEAD
+
 import { IonContent, IonHeader, IonToolbar, IonTitle,
   IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
   IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
   , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar}
   from '@ionic/angular/standalone';
-=======
-import { compassOutline } from 'ionicons/icons';
 
->>>>>>> 450731027d68ce118a692efffe2f2393531755d2
 
 @Component({
   selector: 'app-team',

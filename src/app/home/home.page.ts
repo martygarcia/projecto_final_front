@@ -64,34 +64,34 @@ export class HomePage implements OnInit {
       console.log('user', this.user);
 
       this.loadUser()
-      // createUser();
-    });
+        // createUser();
+      });
 
-    
-  }
-
-  loadUser() {
-    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
-      console.log( response);
-      console.log(this.user.email);
-      if(response == "not found"){
-        this.createUser();
-      }
-    }); 
-
-  }
-
-  createUser() {
-
-    let new_user = {
-      email: this.user.email,
-      name: this.user.name
+      
     }
 
-    this.http.post('http://localhost:3001/add_user', new_user).subscribe((response) => {
-      console.log(response);
-    });
-  }
+    loadUser() {
+      this.http.get('https://prijecto-final-back-2.onrender.com/users/' + this.user.email).subscribe((response:any) => {
+        console.log( response);
+        console.log(this.user.email);
+        if(response == "not found"){
+          this.createUser();
+        }
+      }); 
+
+    }
+
+    createUser() {
+
+      let new_user = {
+        email: this.user.email,
+        name: this.user.name
+      }
+
+      this.http.post('https://prijecto-final-back-2.onrender.com/add_user', new_user).subscribe((response) => {
+        console.log(response);
+      });
+    }
 
 
     // console.log('levelButton', level);
