@@ -27,8 +27,8 @@ export class StatsPage implements OnInit {
   public stats_imgs: any = [];
   public team: any = [];
   public stats_color: any = ["primary", "secondary", "tertiary", "success", "warning", "danger", "medium"];
-  // public url:string = "https://proyecto-final-pokemon.web.app/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
 
 
 

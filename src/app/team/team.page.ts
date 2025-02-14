@@ -26,34 +26,34 @@ import { IonContent, IonHeader, IonToolbar, IonTitle,
 })
 export class TeamPage implements OnInit {
 
-  public items:any = [];
+  public user_team_ids:any = [];
+  public user_team:any = [];
   public poke_api_url:string = 'https://pokeapi.co/api/v2/pokemon/';
   public random_pokemon!:any 
   public saved_pokemon!:any
   public user:any
   public user_stats!:any
-  public is_load_user_stats:boolean = false
+  public is_load_user_stats:boolean = true
   public array_imgs_load_user:any
-  public array_position_load_user:any
   public array_poke_users_load:any[] = []
   public user_load:any
-  // public url:string = "https://proyecto-final-pokemon.web.app/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
 
 
 
   handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // Before complete is called with the items they will remain in the
     // order before the drag
-    console.log('Before complete', this.items);
+    console.log('Before complete', this.user_team);
 
     // Finish the reorder and position the item in the DOM based on
     // where the gesture ended. Update the items variable to the
     // new order of items
-    this.items = event.detail.complete(this.items);
+    this.user_team = event.detail.complete(this.user_team);
 
     // After complete is called the items will be in the new order
-    console.log('After complete', this.items);
+    console.log('After complete', this.user_team);
   }
 
   constructor(private http: HttpClient, private auth: AuthService) { }
@@ -85,7 +85,7 @@ export class TeamPage implements OnInit {
         if(this.user_stats != "user no encontrado pringado"){
   
 
-          this.array_position_load_user = [
+          this.user_team_ids = [
             this.user_stats[0].poke_position1,
             this.user_stats[0].poke_position2,
             this.user_stats[0].poke_position3,
@@ -95,16 +95,20 @@ export class TeamPage implements OnInit {
           ]
 
           console.log("array de equipo de users")
-          console.log(this.array_position_load_user)
+          console.log(this.user_team)
 
+          
+          console.log("ids de los equipos")
+          console.log(this.user_team_ids)
+          
+          console.log(this.user_team)
           for(let i = 0; i < 6; i++){
-            this.http.get(this.poke_api_url + this.array_position_load_user[i]).subscribe((response) => {
+            this.http.get(this.poke_api_url + this.user_team_ids[i]).subscribe((response) => {
               console.log("esto es la respuesta de los pokemon cartgados en usuarios");
 
-              this.array_poke_users_load.push(response)
-              console.log(this.array_poke_users_load);
+              this.user_team.push(response)
+              console.log(this.user_team);
 
-              this.is_load_user_stats = true
             });
           }
         }
@@ -132,36 +136,36 @@ export class TeamPage implements OnInit {
       console.log(this.random_pokemon);
       this.saved_pokemon = response;
       
-      if(this.items.length < 6){
-        this.items.push(this.saved_pokemon);
+      if(this.user_team.length < 6){
+        this.user_team.push(this.saved_pokemon);
       }
     });
 
   }
 
   resetTeam(){
-    this.items = [];
+    this.user_team = [];
   }
 
   saveTeam(){ 
-    if(this.items.length == 6){
+    if(this.user_team.length == 6){
 
-      console.log(this.items[0].id)
+      console.log(this.user_team[0].id)
       // Post a la tabla de equipo hace falta saber q user esta logueado
 
       let team_finish = {
-        poke_position1: this.items[0].id,
-        poke_position2: this.items[1].id,
-        poke_position3: this.items[2].id,
-        poke_position4: this.items[3].id,
-        poke_position5: this.items[4].id,
-        poke_position6: this.items[5].id,
-        poke_img1: this.items[0].sprites.front_default,
-        poke_img2: this.items[1].sprites.front_default,
-        poke_img3: this.items[2].sprites.front_default,
-        poke_img4: this.items[3].sprites.front_default,
-        poke_img5: this.items[4].sprites.front_default,
-        poke_img6: this.items[5].sprites.front_default,
+        poke_position1: this.user_team[0].id,
+        poke_position2: this.user_team[1].id,
+        poke_position3: this.user_team[2].id,
+        poke_position4: this.user_team[3].id,
+        poke_position5: this.user_team[4].id,
+        poke_position6: this.user_team[5].id,
+        poke_img1: this.user_team[0].sprites.front_default,
+        poke_img2: this.user_team[1].sprites.front_default,
+        poke_img3: this.user_team[2].sprites.front_default,
+        poke_img4: this.user_team[3].sprites.front_default,
+        poke_img5: this.user_team[4].sprites.front_default,
+        poke_img6: this.user_team[5].sprites.front_default,
         id_users: this.user_load[0].id
       }
 
@@ -194,15 +198,15 @@ export class TeamPage implements OnInit {
     }
 
     for(let i = 0; i <= 5; i++){
-      this.items.push(this.array_poke_users_load[i].id)
+      this.user_team.push(this.array_poke_users_load[i].id)
 
       console.log("this items el bucle")
-      console.log(this.items)
+      console.log(this.user_team)
     }
 
 
     console.log("esto es items")
-    console.log(this.items)
+    console.log(this.user_team)
     
     this.http.post( this.url + "update_team/", team_finish).subscribe(
   (response: any) => {

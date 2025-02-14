@@ -3,7 +3,7 @@
   <ion-content>
     <ion-list>
       @for(stat_img of stats_imgs; track stat_img;let index = $index;) {
-        
+        {{ stat_img.email }}
       }
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">

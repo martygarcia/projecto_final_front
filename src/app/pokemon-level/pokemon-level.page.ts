@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, isFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -26,7 +26,7 @@ import { IonContent, IonHeader, IonToolbar, IonTitle,
 export class PokemonLevelPage implements OnInit {
 
   public level_number!: any;
-  public level_fuego:any = [];
+  public level_team:any = [];
   public level_fuego_pokemons:any = [];
   public ai_poke:boolean = false;
   public user: any;
@@ -53,8 +53,8 @@ export class PokemonLevelPage implements OnInit {
   public number_user_pokemons:number = 0
   public finish_battle:boolean = true
   public win_or_lose:string = "win"
-  // public url:string = "https://proyecto-final-pokemon.web.app/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
   public is_firts_time:boolean = true
 
 
@@ -74,22 +74,31 @@ export class PokemonLevelPage implements OnInit {
     console.log('ngOnInit pokemon level', this.level_number);
 
     if(this.level_number == 1){
-
-      this.http.get(  this.url + 'fuego').subscribe((response) => {
-        this.level_fuego = response;
-        console.log(this.level_fuego);
-
-        this.array_pokemons_cpu = [
-          this.level_fuego[0].poke1,
-          this.level_fuego[0].poke2,
-          this.level_fuego[0].poke3,
-          this.level_fuego[0].poke4,
-          this.level_fuego[0].poke5,
-          this.level_fuego[0].poke6,
-        ]
-      });
-
+      this.loadCpuTeam("fuego")
     }
+
+
+  }
+  
+  loadCpuTeam(level:string){
+
+    
+    this.http.get(this.url + level).subscribe((response) => {
+      this.level_team = response;
+      console.log(this.level_team);
+
+      this.array_pokemons_cpu = [
+        this.level_team[0].poke1,
+        this.level_team[0].poke2,
+        this.level_team[0].poke3,
+        this.level_team[0].poke4,
+        this.level_team[0].poke5,
+        this.level_team[0].poke6,
+      ]
+
+  this.pokemons_fuego_db()
+
+    });
   }
 
   loadUser() {
@@ -114,8 +123,6 @@ export class PokemonLevelPage implements OnInit {
   }
 
   playLevel(){
-
-    this.pokemons_fuego_db()
     
     this.http.get(  this.url + 'user_team/' + this.user.email).subscribe((response) => {
       console.log(response);

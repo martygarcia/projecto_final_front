@@ -21,13 +21,10 @@
 </ion-grid>
 
   <ion-list>
-    <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+    <!-- The reorder gesture is disabled by default, enable it to drag and drop user_team -->
     <!-- Casting $event to $any is a temporary fix for this bug https://github.com/ionic-team/ionic-framework/issues/24245 -->
     <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
-      @for (item of items; track item) {
-
-
-      @if(is_load_user_stats == false){
+      @for (item of user_team; track item) {
         <ion-item>
           <ion-grid>
             <ion-row>
@@ -47,32 +44,6 @@
           </ion-grid>
           <ion-reorder slot="end"></ion-reorder>
         </ion-item>
-      }
-    }
-
-    @for(items_user_load of array_poke_users_load; track items_user_load){
-      
-    @if(is_load_user_stats == true){
-        <ion-item>
-          <ion-grid>
-            <ion-row>
-              <ion-col class="pokemon_img">
-                <img src="{{ items_user_load.sprites.front_default }}">
-              </ion-col>
-              <ion-col>
-                {{ items_user_load.name }} 
-              </ion-col>
-              <ion-col>
-                {{ items_user_load.types[0].type.name }}
-              </ion-col>
-              <ion-col>
-                PS :{{ items_user_load.stats[0].base_stat }}
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-          <ion-reorder slot="end"></ion-reorder>
-        </ion-item>
-      }
     }
     </ion-reorder-group>
   </ion-list>
