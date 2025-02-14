@@ -1,16 +1,20 @@
 <ion-content [fullscreen]="true">
 
-  @if(finish_battle != true && win_or_lose == "win"){
-    <h3>Has ganado </h3>
-    <ion-button>
-      Volver a la pantalla de inicio
-    </ion-button>
-  }@if(finish_battle != true && win_or_lose == "lose" ){
-    <h3>Has perdido </h3>
-    <ion-button (click)="goToHome()">
-      Volver a la pantalla de inicio
-    </ion-button>
-  }
+  <div class="conatiner_finish">
+
+    @if(finish_battle != true && win_or_lose == "win"){
+      <h3>Has ganado </h3>
+      <ion-button (click)="goToHome()">
+        Volver a la pantalla de inicio
+      </ion-button>
+    }@if(finish_battle != true && win_or_lose == "lose" ){
+      <h3>Has perdido </h3>
+      <ion-button (click)="goToHome()">
+        Volver a la pantalla de inicio
+      </ion-button>
+    }
+
+  </div>
 
   <div class="global-container">
 

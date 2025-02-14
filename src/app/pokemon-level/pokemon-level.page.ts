@@ -53,7 +53,10 @@ export class PokemonLevelPage implements OnInit {
   public number_user_pokemons:number = 0
   public finish_battle:boolean = true
   public win_or_lose:string = "win"
-  public url:string = "https://proyecto-final-pokemon.web.app/"
+  // public url:string = "https://proyecto-final-pokemon.web.app/"
+  public url:string = "http://localhost:3001/"
+  public is_firts_time:boolean = true
+
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -90,7 +93,7 @@ export class PokemonLevelPage implements OnInit {
   }
 
   loadUser() {
-    this.http.get(  this.url + '/users/' + this.user.email).subscribe((response:any) => {
+    this.http.get(  this.url + 'users/' + this.user.email).subscribe((response:any) => {
       console.log( response);
       console.log(this.user.email);
     });
@@ -104,7 +107,8 @@ export class PokemonLevelPage implements OnInit {
   pokemons_fuego_db(){
     this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_cpu[this.number_cpu_pokemons]).subscribe((response) => {
       this.level_fuego_pokemons = response;
-      console.log("esto es el pokemon de maquina q va a jugar" +  this.level_fuego_pokemons);
+      console.log("esto es el pokemon de maquina q va a jugar");
+      console.log(this.level_fuego_pokemons)
     
     });
   }
@@ -151,17 +155,34 @@ export class PokemonLevelPage implements OnInit {
         this.see_atack = true;
         this.ai_poke = true;
       });
-
-
     }); 
 
     this.what_is_doing_text = "EL RIVAL HA SACADO UN POKEMON, ATENTO"
 }
 
+start(){
+
+  this.is_firts_time = false
+  console.log("Objetos para saber quien comienza")
+
+  if(this.user_pokemon_atack.stats[5].base_stat < this.level_fuego_pokemons.stats[5].base_stat){
+    console.log("empiza la cpu")
+    this.what_is_doing_text = "LA CPU ES MAS RAPIDA Y COMENZARA ELLA"
+      this.cpu_turn()
+  }else{
+    console.log("empieza el usuario")
+    this.what_is_doing_text = "ERES MAS RAPIDO QUE EL ENEMIGO COMIENZAS TU"
+  }
+}
+
 atack(what_is_doing:string){
 
+  if(this.is_firts_time == true){
+    this.start()
+  }
 
-  console.log(what_is_doing)
+  setTimeout(() => {
+    console.log(what_is_doing)
 
   if(what_is_doing == "atack"){
 
@@ -237,6 +258,7 @@ atack(what_is_doing:string){
 
     this.cpu_turn()
   }
+  }, 500);
 }
 
 pokemon_is_alive(){
@@ -259,40 +281,19 @@ pokemon_is_alive(){
 }
 
 winOrLose(){
-  if(this.number_cpu_pokemons > 5){
+  if(this.number_user_pokemons > 5){
     this.finish_battle = false
-    this.win_or_lose = "win"
+    this.win_or_lose = "lose"
 
   }else if (this.number_cpu_pokemons > 5){
     this.what_is_doing_text = "Has ganado"
     this.finish_battle = false
-    this.win_or_lose = "lose"
+    this.win_or_lose = "win"
   }
 }
 
 ramdomDefence(){
   this.ramdon_defence = Math.floor(Math.random() * 3) + 1;
-}
-
-start(){
-
-  console.log("aqui funciona")
-
-  console.log( "numero de velocidad de pokemon de usuario ")
-  console.log(this.prueba)
-  console.log( "numero de velocidad de pokemon " + this.level_fuego_pokemons.stats[5].base_stat)
-
-  
-  // if(this.level_fuego_pokemons.stats[5].base_stat > this.user_pokemon_atack.stats[5].base_stat){
-  //   this.is_user_turn = false
-  //   console.log("turno de maquina")
-  //   this.cpu_turn()
-  // }else {
-  //   this.is_user_turn = true
-  //   console.log("turno de user")
-    
-  // }
-
 }
 
 random_move_cpu(){
@@ -413,11 +414,12 @@ calcular_dano(){
 }
 
 goToHome(){
+  this.ps_user = 1
+  this.ps_cpu = 1
+  this.number_cpu_pokemons = 0
+  this.number_user_pokemons = 0
   this.router.navigate(['/home']);
-    this.finish_battle = true
-    this.number_cpu_pokemons = 0
-    this.ps_user = 1
-    this.ps_cpu = 1
-    this.number_user_pokemons = 0
+  this.finish_battle = true
+
 }
 }

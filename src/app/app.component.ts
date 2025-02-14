@@ -43,6 +43,9 @@ export class AppComponent implements OnInit {
   }
 
   public user: any;
+  // public url:string = "https://proyecto-final-pokemon.web.app/"
+  public url:string = "http://localhost:3001/"
+
 
   ngOnInit() {
 
@@ -58,7 +61,7 @@ export class AppComponent implements OnInit {
 
 
   loadUser() {
-    this.http.get('http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
+    this.http.get( this.url + 'users/' + this.user.email).subscribe((response:any) => {
       console.log( response);
       console.log(this.user.email);
     });

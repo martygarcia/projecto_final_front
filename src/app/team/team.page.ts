@@ -37,7 +37,9 @@ export class TeamPage implements OnInit {
   public array_position_load_user:any
   public array_poke_users_load:any[] = []
   public user_load:any
-  public url:string = "https://proyecto-final-pokemon.web.app/"
+  // public url:string = "https://proyecto-final-pokemon.web.app/"
+  public url:string = "http://localhost:3001/"
+
 
 
   handleReorder(event: CustomEvent<ItemReorderEventDetail>) {
@@ -67,8 +69,13 @@ export class TeamPage implements OnInit {
 
   loadUser() {
     this.http.get( this.url + 'users/' + this.user.email).subscribe((response:any) => {
+      console.log( "esto es el repsonse del user");
       console.log( response);
       this.user_load = response
+
+      if(response == "not found"){
+        this.createUser();
+      }
 
       this.http.get(  this.url + 'user_team/' + this.user.email).subscribe((response:any) => {
         this.user_stats = response
@@ -104,6 +111,18 @@ export class TeamPage implements OnInit {
       });
     });
     
+  }
+
+  createUser() {
+
+    let new_user = {
+      email: this.user.email,
+      name: this.user.name
+    }
+
+    this.http.post( 'http://localhost:3001/add_user', new_user).subscribe((response) => {
+      console.log(response);
+    });
   }
 
   randomPokemon(){
@@ -173,8 +192,19 @@ export class TeamPage implements OnInit {
       poke_img6: this.array_poke_users_load[5].sprites.front_default,
       id_users: this.user_load[0].id
     }
+
+    for(let i = 0; i <= 5; i++){
+      this.items.push(this.array_poke_users_load[i].id)
+
+      console.log("this items el bucle")
+      console.log(this.items)
+    }
+
+
+    console.log("esto es items")
+    console.log(this.items)
     
-    this.http.put( this.url + "update_team/", team_finish).subscribe(
+    this.http.post( this.url + "update_team/", team_finish).subscribe(
   (response: any) => {
     console.log('Respuesta del servidor:', response);
   },

@@ -28,7 +28,9 @@ export class HomePage implements OnInit {
   message = '';
 
   public user: any;
-  public url:string = "https://proyecto-final-pokemon.web.app/"
+  // public url:string = "https://proyecto-final-pokemon.web.app/"
+  public url:string = "http://localhost:3001/"
+
 
   constructor(private modalCtrl: ModalController, private router: Router,private auth: AuthService,private http: HttpClient) { }
 
@@ -72,7 +74,7 @@ export class HomePage implements OnInit {
     }
 
     loadUser() {
-      this.http.get( this.url + 'users/' + this.user.email).subscribe((response:any) => {
+      this.http.get( 'http://localhost:3001/users/' + this.user.email).subscribe((response:any) => {
         console.log( response);
         console.log(this.user.email);
         if(response == "not found"){
@@ -89,7 +91,7 @@ export class HomePage implements OnInit {
         name: this.user.name
       }
 
-      this.http.post(  this.url +'add_user', new_user).subscribe((response) => {
+      this.http.post( 'http://localhost:3001/add_user', new_user).subscribe((response) => {
         console.log(response);
       });
     }
