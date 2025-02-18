@@ -43,13 +43,15 @@ export class HomePage implements OnInit {
 
     const modal = await this.modalCtrl.create({
       component: ModalComponent,
+      backdropDismiss: false  ,
       componentProps: {
         number: level_number}
     });
+    
     modal.present();
 
     modal.onDidDismiss().then((data:any) => {
-      if(data != 'cancel'){
+      if(data == 'confirm'){
       this.router.navigate(['/pokemon-level', data]);
       }
       console.log(data);
