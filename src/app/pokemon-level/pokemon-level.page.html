@@ -7,11 +7,13 @@
       <ion-button (click)="goToHome()">
         Volver a la pantalla de inicio
       </ion-button>
+      <p>Has ganado una medalla por ganar el combate</p>
     }@if(finish_battle != true && win_or_lose == "lose" ){
       <h3>Has perdido </h3>
       <ion-button (click)="goToHome()">
         Volver a la pantalla de inicio
       </ion-button>
+      <p>No has conseguido ninguna medalla intentalo de nuevo</p>
     }
 
   </div>

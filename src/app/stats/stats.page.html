@@ -1,9 +1,22 @@
 <ion-content [fullscreen]="true">
 
   <ion-content>
-    <ion-list>
-      @for(stat_img of stats_imgs; track stat_img;let index = $index;) {
-        {{ stat_img.email }}
+      <h1>Ranking global de los mejores jugadores</h1>
+
+    <ion-list class="stats_container">
+      @for(item of stats; track item;let index = $index;) {
+        <ion-item>
+          <ion-badge slot="start" color="warning ">{{ index + 1 }}</ion-badge>
+          <ion-label>Usuario: </ion-label>
+          <ion-label>{{ item.email }}</ion-label> 
+          <ion-label>Medallas: {{ item.id_medallas }}</ion-label>
+          <img src="{{ item.poke_img1 }}" alt="">
+          <img src="{{ item.poke_img2 }}" alt="">
+          <img src="{{ item.poke_img3 }}" alt="">
+          <img src="{{ item.poke_img4 }}" alt="">
+          <img src="{{ item.poke_img5 }}" alt="">
+          <img src="{{ item.poke_img6 }}" alt="">
+        </ion-item>
       }
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">

@@ -10,7 +10,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { IonContent, IonHeader, IonToolbar, IonTitle,
   IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
   IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
-  , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar}
+  , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar, ToastController }
   from '@ionic/angular/standalone';
 
 
@@ -22,7 +22,7 @@ import { IonContent, IonHeader, IonToolbar, IonTitle,
   imports: [IonContent, IonHeader, IonToolbar, IonTitle,
     IonList, IonIcon, IonMenu, IonLabel, IonRouterOutlet,
     IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
-    , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll,IonInfiniteScrollContent , IonProgressBar]
+    , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll,IonInfiniteScrollContent  , IonProgressBar]
 })
 export class TeamPage implements OnInit {
 
@@ -37,8 +37,9 @@ export class TeamPage implements OnInit {
   public array_imgs_load_user:any
   public array_poke_users_load:any[] = []
   public user_load:any
-  public url:string = "https://prijecto-final-back-2.onrender.com/"
-  // public url:string = "http://localhost:3001/"
+  // public url:string = "https://prijecto-final-back-2.onrender.com/"
+  public url:string = "http://localhost:3001/"
+  public server_response:any
 
 
 
@@ -56,7 +57,7 @@ export class TeamPage implements OnInit {
     console.log('After complete', this.user_team);
   }
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService, private toastController: ToastController) { }
 
   ngOnInit() {
     this.auth.user$.subscribe(data => {
@@ -124,7 +125,7 @@ export class TeamPage implements OnInit {
       name: this.user.name
     }
 
-    this.http.post( 'http://localhost:3001/add_user', new_user).subscribe((response) => {
+    this.http.post(  this.url + 'add_user', new_user).subscribe((response) => {
       console.log(response);
     });
   }
@@ -211,6 +212,7 @@ export class TeamPage implements OnInit {
     this.http.post( this.url + "update_team/", team_finish).subscribe(
   (response: any) => {
     console.log('Respuesta del servidor:', response);
+    this.server_response = response
   },
   (error) => {
     console.error('Error al realizar la solicitud POST:', error);
@@ -221,5 +223,16 @@ export class TeamPage implements OnInit {
     console.log('Select 6 Pokemon');
     }
 
+    
   } 
+
+    async presentToast(position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastController.create({
+      message: "El equipo se ha guardado correctamente",
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
+  }
 }

@@ -1,3 +1,4 @@
+
 ion-item{
     text-align: center;
     width: 90%;
@@ -5,4 +6,25 @@ ion-item{
 
 ion-item{
     margin: 0 auto;
+}
+
+ion-content{
+    --background: #1E1E1E;
+    h1 {
+        text-align: center;
+        font-weight: bolder;
+        font-size: 2.5rem;
+        margin: 3rem;
+    }
+}
+
+.stats_container {
+    text-align: center;
+    
+
+
+    ion-label {
+        font-size: 1.2rem;
+    }
+
 }

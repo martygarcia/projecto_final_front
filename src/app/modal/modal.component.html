@@ -10,6 +10,24 @@
       <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <div class="warning_container">
+    @if (number == 1){
+      <h4>En este nivel te enfrentaras a pokemons de tipo fuego</h4>
+    }
+    @if (number == 2){
+      <h4>En este nivel te enfrentaras a pokemons de tipo agua</h4>
+    }
+    @if (number == 3){
+      <h4>En este nivel te enfrentaras a pokemons de tipo planta</h4>
+    }
+    @if (number == 4){
+      <h4>En este nivel te enfrentaras a pokemons de tipo electrico</h4>
+    }
+    @if (number == 5){
+      <h4>En este nivel te enfrentaras a pokemons de tipo lucha</h4>
+    }
+  </div>
+  
 </ion-header>
 <ion-content class="ion-padding">
   

@@ -11,6 +11,7 @@ import { IonContent, IonHeader, IonToolbar, IonTitle,
   IonMenuButton, IonMenuToggle, IonListHeader, IonButtons, IonGrid, IonCol,IonRow
   , IonReorder, IonItem, IonReorderGroup, IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonProgressBar}
   from '@ionic/angular/standalone';
+import { medal } from 'ionicons/icons';
 
 
 @Component({
@@ -28,8 +29,10 @@ export class HomePage implements OnInit {
   message = '';
 
   public user: any;
-  public url:string = "https://prijecto-final-back-2.onrender.com/"
-  // public url:string = "http://localhost:3001/"
+  // public url:string = "https://prijecto-final-back-2.onrender.com/"
+  public url:string = "http://localhost:3001/"
+  public is_disabled:boolean = false
+  public load_user:any
 
 
   constructor(private modalCtrl: ModalController, private router: Router,private auth: AuthService,private http: HttpClient) { }
@@ -76,7 +79,7 @@ export class HomePage implements OnInit {
     loadUser() {
       this.http.get(  this.url + 'users/' + this.user.email).subscribe((response:any) => {
         console.log( response);
-        console.log(this.user.email);
+        this.load_user = response
         if(response == "not found"){
           this.createUser();
         }
@@ -88,7 +91,8 @@ export class HomePage implements OnInit {
 
       let new_user = {
         email: this.user.email,
-        name: this.user.name
+        name: this.user.name,
+        medals: 0
       }
 
       this.http.post( this.url  + 'add_user', new_user).subscribe((response) => {

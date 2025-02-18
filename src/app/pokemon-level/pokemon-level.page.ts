@@ -53,9 +53,10 @@ export class PokemonLevelPage implements OnInit {
   public number_user_pokemons:number = 0
   public finish_battle:boolean = true
   public win_or_lose:string = "win"
-  public url:string = "https://prijecto-final-back-2.onrender.com/"
-  // public url:string = "http://localhost:3001/"
+  // public url:string = "https://prijecto-final-back-2.onrender.com/"
+  public url:string = "http://localhost:3001/"
   public is_firts_time:boolean = true
+  public user_load:any
 
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
@@ -75,15 +76,21 @@ export class PokemonLevelPage implements OnInit {
 
     if(this.level_number == 1){
       this.loadCpuTeam("fuego")
+    }else if(this.level_number == 2){
+      this.loadCpuTeam("agua")
+    }else if(this.level_number == 3){
+      this.loadCpuTeam("planta")
+    }else if(this.level_number == 4){
+      this.loadCpuTeam("electrico")
+    }else if(this.level_number == 5){
+      this.loadCpuTeam("roca")
     }
-
-
   }
   
   loadCpuTeam(level:string){
 
     
-    this.http.get(this.url + level).subscribe((response) => {
+    this.http.get(this.url + "level/" + level).subscribe((response) => {
       this.level_team = response;
       console.log(this.level_team);
 
@@ -104,7 +111,7 @@ export class PokemonLevelPage implements OnInit {
   loadUser() {
     this.http.get(  this.url + 'users/' + this.user.email).subscribe((response:any) => {
       console.log( response);
-      console.log(this.user.email);
+      this.user_load = response
     });
   }
 
@@ -123,6 +130,8 @@ export class PokemonLevelPage implements OnInit {
   }
 
   playLevel(){
+    console.log("Objeto de usuario prueba de medallas")
+    console.log(this.user_load[0].id_medallas)
     
     this.http.get(  this.url + 'user_team/' + this.user.email).subscribe((response) => {
       console.log(response);
@@ -280,6 +289,7 @@ pokemon_is_alive(){
     this.winOrLose()
   }else if(this.ps_user <= 0){
     console.log("Has perdido pringado")
+    this.win_or_lose = "lose"
     this.number_cpu_pokemons ++
     this.number_user_pokemons ++
     this.ps_user = 1
@@ -428,5 +438,28 @@ goToHome(){
   this.router.navigate(['/home']);
   this.finish_battle = true
 
+  if(this.win_or_lose == "win"){
+    this.postMedals()
+  }
+}
+
+postMedals(){
+  let medals = {
+    email: this.user.email,
+    medals: this.user_load[0].id_medallas + 1
+  }
+
+  console.log(medals)
+  
+  this.http.post(  this.url + "add_medals", medals).subscribe(
+    (response: any) => {
+      console.log('Respuesta del servidor:', response);
+  console.log(this.user_load.id_medallas)
+
+    },
+    (error) => {
+      console.error('Error al realizar la solicitud POST:', error);
+    }
+);
 }
 }

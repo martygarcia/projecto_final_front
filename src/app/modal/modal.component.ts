@@ -24,11 +24,13 @@ export class ModalComponent  implements OnInit {
   name!: string;
   level!: any;
   public number!: number;
+  public message!: any;
 
   constructor(private modalCtrl: ModalController,private router: Router, private navParams : NavParams) {}
 
-  cancel() {
-    return this.modalCtrl.dismiss('cancel');
+  async cancel() {
+    await this.modalCtrl.dismiss('cancel');
+    this.router.navigate(['/home']);
   }
 
   confirm() {
@@ -38,7 +40,6 @@ export class ModalComponent  implements OnInit {
   ngOnInit() {
     this.number = this.navParams.get('number');
     console.log('ngOnInit', this.navParams.get('number'));
-
   }
 
 }
