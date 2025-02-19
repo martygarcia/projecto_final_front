@@ -37,8 +37,8 @@ export class TeamPage implements OnInit {
   public array_imgs_load_user:any
   public array_poke_users_load:any[] = []
   public user_load:any
-  // public url:string = "https://prijecto-final-back-2.onrender.com/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
   public server_response:any
 
 

@@ -43,8 +43,8 @@ export class AppComponent implements OnInit {
   }
 
   public user: any;
-  // public url:string = "https://prijecto-final-back-2.onrender.com/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
 
 
   ngOnInit() {

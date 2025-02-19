@@ -53,8 +53,8 @@ export class PokemonLevelPage implements OnInit {
   public number_user_pokemons:number = 0
   public finish_battle:boolean = true
   public win_or_lose:string = "win"
-  // public url:string = "https://prijecto-final-back-2.onrender.com/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
   public is_firts_time:boolean = true
   public user_load:any
 

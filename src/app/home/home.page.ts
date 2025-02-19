@@ -29,8 +29,8 @@ export class HomePage implements OnInit {
   message = '';
 
   public user: any;
-  // public url:string = "https://prijecto-final-back-2.onrender.com/"
-  public url:string = "http://localhost:3001/"
+  public url:string = "https://prijecto-final-back-2.onrender.com/"
+  // public url:string = "http://localhost:3001/"
   public is_disabled:boolean = false
   public load_user:any
 
