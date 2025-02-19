@@ -30,11 +30,10 @@ export class ModalComponent  implements OnInit {
 
   async cancel() {
     await this.modalCtrl.dismiss('cancel');
-    this.router.navigate(['/home']);
   }
 
   confirm() {
-    return this.modalCtrl.dismiss(this.number);
+    return this.modalCtrl.dismiss(this.number, 'confirm');
   }
 
   ngOnInit() {

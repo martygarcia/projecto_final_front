@@ -26,35 +26,37 @@
         <ion-col offset="8">
           @if (ai_poke == true){
           <div class="ps_container">
-            <h3>PS:</h3>         
+            <h3 class="ps_container_h3">PS:</h3>         
             <p>{{ level_fuego_pokemons.stats[0].base_stat }}</p>
             <ion-progress-bar class="ps_bar_container" value="{{ ps_cpu }}"></ion-progress-bar>
           </div>
           
             <div class="poke1_container">
-              <img src="{{ level_fuego_pokemons.sprites.front_default }}">
+              <img id="charmander" src="{{ level_fuego_pokemons.sprites.front_default }}">
             </div>
+            <h6>{{ level_fuego_pokemons.name }}</h6>
           } 
+
         </ion-col>
       </ion-row>
       <ion-row>
+        @if (ai_poke == true){
         <ion-col offset="0.5" size="4">
           <div class="poke2_container">
-            @if (ai_poke == true){
-              <div class="ps_container">
+
+              <h6>{{ prueba.name }}</h6>
+              <div class="ps_container_user">
                 <h3>PS:</h3>         
                 <p> {{user_pokemon_atack?.stats[0].base_stat}}</p>
             <ion-progress-bar class="ps_bar_container" value="{{ ps_user }}"></ion-progress-bar>
               </div>
-              } 
-            @if(user_poke == true){
 
-              <img src="{{ array_img_pokemons_user[number_user_pokemons] }}">
-
-            }
+              <img id="exeggutor" src="{{ array_img_pokemons_user[number_user_pokemons] }}">
+            
 
           </div>
         </ion-col>
+      }
       </ion-row>
       <ion-row>
         <ion-col class="game_text" size="8">
@@ -64,15 +66,15 @@
         <p>{{ what_is_doing_text }}</p>
         </ion-col>
         @if (see_atack == false){
-        <ion-col>
+        <ion-col class="game_buttons">
           <ion-button size="large" fill="outline" (click)="playLevel()">Jugar nivel</ion-button>
         </ion-col>
-        <ion-col>
+        <ion-col class="game_buttons">
           <ion-button size="large" fill="outline" (click)="goToTeam()">Editar Equipo</ion-button>
         </ion-col>
         }
         @if (see_atack == true){
-          <ion-col (click)="atack('atack')" class="atack_container">
+          <ion-col id="attack-btn" (click)="atack('atack')" class="atack_container">
             <p>ATACAR</p>
           </ion-col>
           <ion-col (click)="atack('defence')" class="atack_container">

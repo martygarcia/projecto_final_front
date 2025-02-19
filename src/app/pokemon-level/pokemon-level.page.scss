@@ -1,3 +1,8 @@
+* {
+    font-family: 'pokemon-font';
+}
+
+
 ion-grid {
 
     ion-progress-bar {
@@ -5,33 +10,29 @@ ion-grid {
     }
 
     width: 100%;
-    border: 1px solid #23e7afa2;
+
     
 
     ion-row:nth-child(-n + 2) {
 
-        
-        height: 35vh;
-
-        ion-col{
-            border: 1px solid #23e7afa2;
-        }
+        height: 34vh;
 
     }
 
     ion-row:last-child {
 
-        
+        margin: 0 5rem 0 0;
         height: 20vh;
-
         .game_text{
+            width: 100%;
             text-align: center;
-            font-size: 1.7rem;
+            font-size: 1.5rem;
+            height: auto;
         }
 
         ion-col{
+            margin: 2rem 0 0 0 ;
             text-align: center;
-            border: 1px solid #23e7afa2;
         }
 
     }
@@ -40,52 +41,67 @@ ion-grid {
         font-size: 2rem;
         text-align: center;
         background-color: #121212;
-        border: 1px solid #9b3939;
-
+        color: white;
+        height: 108%;
     }
 
     ion-row {
         background-color: #121212;
     }
 
+
     .poke1_container, .poke2_container {
+        border: #323131 5px solid;
+        border-radius: 50%;
+        background-color: #3c3c3c;
         img {
             width: 15rem;
         }
     }
 
+    .poke2_container img {
+        transform: scaleX(-1);
+    }
+
     .atack_container{
         text-align: center;
         cursor: pointer;
-
+        border: 3px solid #323131;
         p {
+            
             font-size: 1.5rem;
-            margin: 3.5rem 0 0 0 ;
+            margin: 5rem 0 0 0 ;
         }
     }
 
     .atack_container:hover {
             background-color: #323131
-
+            
     }
 }
 
-.ps_container {
+.ps_container, .ps_container_user {
     display: flex;
     font-size: 1.5rem;
 
-    h3 {
+    .ps_container_h3 {
         font-size: 1.2rem;
         margin: 1rem 0.5rem 0 0;
     }
 
+
+
     p {
-        margin: 0.9rem 1rem 0 0 ;
+        margin: 0.6rem 1rem 0 0 ;
         font-size: 1.3rem;
     }
 
     .ps_bar_container{
         margin: 1.6rem 0 0 0;
+    }
+
+    h4{
+        margin: -2rem 0 0 0 ;
     }
 
 }
@@ -96,5 +112,23 @@ ion-grid {
     
     h3 {
         font-size: 3rem;
+    }
+}
+
+.game_text {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    height: auto;
+    border: 5px solid #323131;
+}
+
+.game_buttons {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0 0 0;
+
+    ion-button {
+        margin: 0 1rem 0 0;
     }
 }

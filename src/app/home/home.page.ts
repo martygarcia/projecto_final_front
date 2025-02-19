@@ -51,8 +51,10 @@ export class HomePage implements OnInit {
     modal.present();
 
     modal.onDidDismiss().then((data:any) => {
-      if(data == 'confirm'){
+      if(data.role == 'confirm'){
       this.router.navigate(['/pokemon-level', data]);
+      }else{
+        console.log('No puedes pasar');
       }
       console.log(data);
     });

@@ -58,6 +58,7 @@ export class PokemonLevelPage implements OnInit {
   public is_firts_time:boolean = true
   public user_load:any
 
+  private soundGanar = new Audio('assets/fonts/pokemon/Voicy_Level up 2.mp3')
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private http: HttpClient, private router: Router ) { }
 
@@ -70,6 +71,7 @@ export class PokemonLevelPage implements OnInit {
       this.loadUser()
       // createUser();
     });
+
 
     this.level_number = this.route.snapshot.paramMap.get('data');
     console.log('ngOnInit pokemon level', this.level_number);
@@ -173,7 +175,7 @@ export class PokemonLevelPage implements OnInit {
       });
     }); 
 
-    this.what_is_doing_text = "EL RIVAL HA SACADO UN POKEMON, ATENTO"
+    this.what_is_doing_text = "EL RIVAL HA SACADO A " + this.level_fuego_pokemons.name + " ,A TENTOOOOO"
 }
 
 start(){
@@ -183,11 +185,11 @@ start(){
 
   if(this.user_pokemon_atack.stats[5].base_stat < this.level_fuego_pokemons.stats[5].base_stat){
     console.log("empiza la cpu")
-    this.what_is_doing_text = "LA CPU ES MAS RAPIDA Y COMENZARA ELLA"
+    this.what_is_doing_text =  this.level_fuego_pokemons.name  + " ES MAS RAPIDO ATACARA PRIMERO"
       this.cpu_turn()
   }else{
     console.log("empieza el usuario")
-    this.what_is_doing_text = "ERES MAS RAPIDO QUE EL ENEMIGO COMIENZAS TU"
+    this.what_is_doing_text = "ERES MAS RAPIDO QUE EL ENEMIGO COMIENZAS TU EL COMBATE "
   }
 }
 
@@ -196,8 +198,9 @@ atack(what_is_doing:string){
   if(this.is_firts_time == true){
     this.start()
   }
-
   setTimeout(() => {
+
+    this.pokemon_is_alive()
     console.log(what_is_doing)
 
   if(what_is_doing == "atack"){
@@ -224,35 +227,32 @@ atack(what_is_doing:string){
             this.ps_cpu =  this.ps_cpu - ((damage  * 0.01)) 
             console.log("defensa 1 " + this.ps_cpu + this.ramdon_defence)
             console.log("Daño con defensa 1 el daño es el normal")
-            this.what_is_doing_text = "EL RIVAL HA USADO DEFENSA PERO NO HA TENIDO SUERTE, EL ATAQUE LE HA DADO"
-            this.pokemon_is_alive()
+            this.what_is_doing_text = "EL " +  this.level_fuego_pokemons.name  + " SE DEFENDIO PERO A RECIBIDO EL DANO IGUALMENTE"
+            
     
           }else if(this.ramdon_defence == 2){
             this.ps_cpu =  this.ps_cpu - ((damage  * 0.01) / 3) 
             console.log("daño con defensa 2 " + this.ps_cpu + this.ramdon_defence)
             console.log("Daño con defensa 2 el daño se divide entre 3")
-            this.what_is_doing_text = "EL RIVAL HA USADO DEFENSA PERO HA ESQUIEVADO GRAN PARTE DE TU ATAQUE"
-            this.pokemon_is_alive()
+            this.what_is_doing_text = "EL " +  this.level_fuego_pokemons.name  + " HA USADO DEFENSA PERO HA ESQUIEVADO GRAN PARTE DE TU ATAQUE"
 
     
           }else if(this.ramdon_defence == 3) {
             this.ps_cpu =  this.ps_cpu - 0
             console.log("defensa 3 " + this.ps_cpu + " " + this.ramdon_defence)
             console.log("Daño con defensa 3 no tienes ningun tipo daño")
-            this.what_is_doing_text = "EL RIVAL HA USADO DEFENSA Y NO LE HAS NI UN RASGUNO "
-            this.pokemon_is_alive()
+            this.what_is_doing_text = "EL " +  this.level_fuego_pokemons.name  + " HA USADO DEFENSA Y NO HA RECIBIDO NINGUN DANO"
 
           }
         }else {
 
           console.log("hola lo hago sin defensa de pokemon")
 
-          this.what_is_doing_text = "EL RIVAL HA TE HA ATACADO"
+          this.what_is_doing_text = "EL " +  this.level_fuego_pokemons.name  + " TE HA ATACADO"
 
 
           this.ps_cpu =  this.ps_cpu - (damage * 0.01)
           console.log(this.ps_cpu)
-          this.pokemon_is_alive()
 
         }
   
@@ -274,13 +274,13 @@ atack(what_is_doing:string){
 
     this.cpu_turn()
   }
-  }, 500);
+  }, 1000);
 }
 
 pokemon_is_alive(){
   if(this.ps_cpu <= 0){
 
-    this.what_is_doing_text = "EL POKEMON DEL RIVAL SE HA DEBILITADO"
+    this.what_is_doing_text = "UUUUUPPPSSSS " +  this.level_fuego_pokemons.name  + " SE HA DEBILITADO"
     this.ps_cpu = 1
     console.log("aqui va el nuevo pokemon")
     this.number_cpu_pokemons ++
@@ -444,6 +444,8 @@ goToHome(){
 }
 
 postMedals(){
+
+  this.soundGanar.play()
   let medals = {
     email: this.user.email,
     medals: this.user_load[0].id_medallas + 1
@@ -462,4 +464,6 @@ postMedals(){
     }
 );
 }
+
+
 }
