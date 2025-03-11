@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
   login() {
     this.auth.loginWithRedirect({
       appState: {
-        target: '/home' 
+        target: '/team' 
       }
     });
   }

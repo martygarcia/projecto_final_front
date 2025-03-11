@@ -2,8 +2,16 @@
     font-family: 'pokemon-font';
 }
 
+
+
 ion-content {
     text-align: center;
+
+    h1{
+        margin: 3rem;
+        font-size: 3rem;
+        font-weight: bold;
+    }
 
     ion-button {
         margin-top: 1rem;

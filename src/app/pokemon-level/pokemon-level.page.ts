@@ -131,6 +131,17 @@ export class PokemonLevelPage implements OnInit {
     });
   }
 
+  llamarPokemonsUasers(){
+    this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_user[this.number_user_pokemons]).subscribe((response) => {
+      this.user_pokemon_atack = response;
+      console.log("obkjeto de usuario")
+      console.log(this.user_pokemon_atack)
+      this.prueba = response
+      this.see_atack = true;
+      this.ai_poke = true;
+    });
+  }
+
   playLevel(){
     console.log("Objeto de usuario prueba de medallas")
     console.log(this.user_load[0].id_medallas)
@@ -163,20 +174,15 @@ export class PokemonLevelPage implements OnInit {
         this.user_team[0].poke_img6,
         
       ]
-    
 
-      this.http.get('https://pokeapi.co/api/v2/pokemon/' + this.array_pokemons_user[this.number_user_pokemons]).subscribe((response) => {
-        this.user_pokemon_atack = response;
-        console.log("obkjeto de usuario")
-        console.log(this.user_pokemon_atack)
-        this.prueba = response
-        this.see_atack = true;
-        this.ai_poke = true;
-      });
+      this.llamarPokemonsUasers()
+      
     }); 
 
     this.what_is_doing_text = "EL RIVAL HA SACADO A " + this.level_fuego_pokemons.name + " ,A TENTOOOOO"
 }
+
+
 
 start(){
 
@@ -294,6 +300,7 @@ pokemon_is_alive(){
     this.number_user_pokemons ++
     this.ps_user = 1
     this.winOrLose()
+    this.llamarPokemonsUasers()
   }
 }
 
